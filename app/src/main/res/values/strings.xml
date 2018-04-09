@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ListSpesaAndroid</string>
+
+    <string name="button_tutorial_skip">Skip</string>
+    <string name="button_tutorial_next">Next</string>
+    <string name="text_tutorial_first_1">Crea e organizza le tue lista</string>
+    <string name="text_tutorial_first_2">Utilizzi sempre la stessa lista della spesa o ne crei di nuove ogni volta? Fai la spesa al super o al paese?</string>
 </resources>
