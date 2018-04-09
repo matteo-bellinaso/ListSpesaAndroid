@@ -1,4 +1,4 @@
-package com.example.matteobellinaso.listspesaandroid.UI.Fragment;
+package com.example.matteobellinaso.listspesaandroid.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,24 +10,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.matteobellinaso.listspesaandroid.R;
-import com.example.matteobellinaso.listspesaandroid.UI.activity.MainActivity;
-import com.example.matteobellinaso.listspesaandroid.UI.activity.TutorialActivity;
-import com.example.matteobellinaso.listspesaandroid.UI.adapter.SimpleFragmentPageAdapter;
+import com.example.matteobellinaso.listspesaandroid.ui.activity.MainActivity;
+import com.example.matteobellinaso.listspesaandroid.ui.activity.TutorialActivity;
 
 /**
  * Created by matteobellinaso on 09/04/18.
  */
 
-public class FragmentTutorialSecond extends Fragment {
+public class FragmentTutorialOne extends Fragment {
 
-    public FragmentTutorialSecond(){}
+
+    public FragmentTutorialOne(){}
+
     private ViewPager tabHost;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
-        View view = inflater.inflate(R.layout.tutorial_fragment_second, container, false);
-
+        View view = inflater.inflate(R.layout.tutorial_fragment_first, container, false);
 
         Button next = (Button) view.findViewById(R.id.button_tutorial_next);
 
@@ -36,7 +36,7 @@ public class FragmentTutorialSecond extends Fragment {
             public void onClick(View v) {
 
                 tabHost = TutorialActivity.viewPagerz;
-                tabHost.setCurrentItem(2,true);
+                tabHost.setCurrentItem(1,true);
 
             }
         });
@@ -54,6 +54,12 @@ public class FragmentTutorialSecond extends Fragment {
             }
         });
 
+
+
         return view;
+
+
     }
+
+
 }

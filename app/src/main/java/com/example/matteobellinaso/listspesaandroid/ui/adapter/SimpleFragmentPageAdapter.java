@@ -1,14 +1,13 @@
-package com.example.matteobellinaso.listspesaandroid.UI.adapter;
+package com.example.matteobellinaso.listspesaandroid.ui.adapter;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.widget.Button;
 
-import com.example.matteobellinaso.listspesaandroid.UI.Fragment.FragmentTutorialOne;
-import com.example.matteobellinaso.listspesaandroid.UI.Fragment.FragmentTutorialSecond;
-import com.example.matteobellinaso.listspesaandroid.UI.Fragment.FragmentTutorialThird;
+import com.example.matteobellinaso.listspesaandroid.ui.fragment.FragmentTutorialOne;
+import com.example.matteobellinaso.listspesaandroid.ui.fragment.FragmentTutorialSecond;
+import com.example.matteobellinaso.listspesaandroid.ui.fragment.FragmentTutorialThird;
 
 /**
  * Created by matteobellinaso on 09/04/18.

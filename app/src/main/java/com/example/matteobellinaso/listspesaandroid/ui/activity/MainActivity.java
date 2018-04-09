@@ -1,4 +1,4 @@
-package com.example.matteobellinaso.listspesaandroid.UI.activity;
+package com.example.matteobellinaso.listspesaandroid.ui.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
