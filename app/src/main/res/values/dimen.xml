@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="registrati_input_250">250dp</dimen>
+    <dimen name="registrati_img_profilo">170dp</dimen>
+    <dimen name="registrati_fontsize">20dp</dimen>
+    <dimen name="registrati_fontsize_form">16dp</dimen>
+</resources>
