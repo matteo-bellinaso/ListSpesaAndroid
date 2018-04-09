@@ -16,6 +16,7 @@
         style="@style/regitrati_title"/>
 
     <ImageView
+        android:id="@+id/img_profilo"
         android:layout_width="@dimen/registrati_img_profilo"
         android:layout_height="@dimen/registrati_img_profilo"
         android:layout_margin="15dp"
@@ -55,11 +56,12 @@
             android:text="@string/password"
             style="@style/font_form"/>
         <EditText
-            android:id="@+id/Username"
+            android:id="@+id/password"
             android:layout_height="wrap_content"
             android:layout_width="@dimen/registrati_input_250"
             android:inputType="text"/>
         <Button
+            android:id="@+id/registrati_toDB"
             android:layout_width="@dimen/registrati_input_250"
             android:layout_height="wrap_content"
             android:text="@string/registrati"
@@ -75,12 +77,14 @@
         style="@style/font_form"
         android:textSize="14dp"/>
     <Button
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
         android:text="@string/accedi_ora"
         style="@style/font_button_accedi"
-        android:textAllCaps="false"/>
+        android:textAllCaps="false"
+        />
 
 </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
