@@ -77,7 +77,7 @@
         style="@style/font_form"
         android:textSize="14dp"/>
     <Button
-
+        android:id="@+id/accediToLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
