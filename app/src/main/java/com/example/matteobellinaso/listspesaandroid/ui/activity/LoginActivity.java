@@ -1,13 +1,14 @@
 package com.example.matteobellinaso.listspesaandroid.ui.activity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.format.DateFormat;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.matteobellinaso.listspesaandroid.R;
 import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseUserManager;
@@ -40,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText emailValue = (EditText) findViewById(R.id.loginEmail);
         final EditText passwordValue = (EditText) findViewById(R.id.loginPassword);
         Button doLogin = (Button) findViewById(R.id.loginButton);
+        final TextView createAccount = (TextView) findViewById(R.id.createAccount);
 
         databaseUserManager = new DatabaseUserManager(this);
         databaseUserManager.open();
@@ -57,12 +59,18 @@ public class LoginActivity extends AppCompatActivity {
                         Calendar calendar = Calendar.getInstance();
                         Long timeStamp = calendar.getTimeInMillis();
                         Utils.writeOnSharedPreferences(timeStamp, getApplicationContext());
-
-
                     }
 
                 }
                 databaseUserManager.close();
+            }
+        });
+
+        createAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),RegistrazioneActivity.class);
+                startActivity(intent);
             }
         });
 
