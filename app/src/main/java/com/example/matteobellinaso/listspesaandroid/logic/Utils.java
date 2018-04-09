@@ -2,6 +2,7 @@ package com.example.matteobellinaso.listspesaandroid.logic;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.format.DateFormat;
 
 public class Utils {
 
@@ -18,5 +19,9 @@ public class Utils {
     public static Long readOnSharedPreferences(Context context){
         SharedPreferences sharedPref = context.getSharedPreferences(TIMESTAMP,Context.MODE_PRIVATE);
         return sharedPref.getLong(TIMESTAMP_VALUE,0);
+    }
+
+    public static String convertDate(String dateInMilliseconds,String dateFormat) {
+        return DateFormat.format(dateFormat, Long.parseLong(dateInMilliseconds)).toString();
     }
 }

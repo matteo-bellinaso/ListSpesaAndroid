@@ -3,6 +3,8 @@ package com.example.matteobellinaso.listspesaandroid.ui.activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,10 +27,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         if (Utils.readOnSharedPreferences(this) != null) {
-            currentCalendar = Calendar.getInstance();
             calendar = Calendar.getInstance();
+            currentCalendar = Calendar.getInstance();
             calendar.setTimeInMillis(Utils.readOnSharedPreferences(this));
-            if (currentCalendar.get(Calendar.DAY_OF_WEEK) != calendar.get(Calendar.DAY_OF_WEEK)) {
+            String token= Utils.convertDate(String.valueOf(Utils.readOnSharedPreferences(this)),"dd");
+            String current= Utils.convertDate(String.valueOf(currentCalendar.getTimeInMillis()),"dd");
+            if(token.equals(current)) {
                 setContentView(R.layout.login_layout);
             }
         }
@@ -63,5 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
+
 
 }
