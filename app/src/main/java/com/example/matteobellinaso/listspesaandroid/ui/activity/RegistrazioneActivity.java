@@ -1,4 +1,4 @@
-package com.example.matteobellinaso.listspesaandroid;
+package com.example.matteobellinaso.listspesaandroid.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.example.matteobellinaso.listspesaandroid.R;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
