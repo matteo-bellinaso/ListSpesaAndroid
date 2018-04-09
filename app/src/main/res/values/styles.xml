@@ -8,4 +8,21 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="regitrati_title">
+        <item name="android:textSize">20dp</item>
+        <item name="android:textColor">@color/registrazione_color</item>
+        <item name="android:text">@string/crea_account</item>
+    </style>
+
+    <style name="font_form">
+       <item name="android:textSize">@dimen/registrati_fontsize_form</item>
+        <item name="android:textColor">@color/font</item>
+    </style>
+
+    <style name="font_button_accedi">
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/bottone</item>
+    </style>
+
+
 </resources>

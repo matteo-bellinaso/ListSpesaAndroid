@@ -7,4 +7,12 @@
     <string name="loginOrText">oppure</string>
     <string name="loginRegisterText">Crea un account</string>
 
+    <string name="nome_cognome">Nome e Cognome</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="registrati">Registrati</string>
+    <string name="accountTrue">Hai già un account</string>
+    <string name="accedi_ora"><u>Accedi ora</u></string>
+    <string name="crea_account">Crea un Account</string>
+
 </resources>
