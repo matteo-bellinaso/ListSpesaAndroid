@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">ListSpesaAndroid</string>
+
+    <string name="button_tutorial_skip">Skip</string>
+    <string name="button_tutorial_next">Next</string>
+    <string name="text_tutorial_first_1">Crea e organizza le tue lista</string>
+    <string name="text_tutorial_first_2">Le tue liste della spesa saranno sempre a disposizione! Organizzale in base alle tue esigenze!</string>
+    <string name="text_tutorial_second_1">Inserisci gli articoli</string>
+    <string name="text_tutorial_second_2">Aggiorna la tua lista con gli articoli che vuoi acquistare</string>
+    <string name="text_tutorial_third_1">Fai la spesa</string>
+    <string name="text_tutorial_third_2">Fai la spesa e aggiorna la tua lista</string>
 </resources>

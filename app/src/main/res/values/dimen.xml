@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="tutorial_text_title">35dp</dimen>
+    <dimen name="margin_top_tutorial_title">40dp</dimen>
+    <dimen name="padding_tutorial_title">30dp</dimen>
+    <dimen name="tutorial_text_description">18dp</dimen>
+    <dimen name="margin_top_tutorial_text">20dp</dimen>
+    <dimen name="tutorial_img">200dp</dimen>
+    <dimen name="tutorial_img_margin">40dp</dimen>
+    <dimen name="padding_tutorial_text">15dp</dimen>
+
+
+
+</resources>
