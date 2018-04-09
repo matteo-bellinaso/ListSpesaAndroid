@@ -5,9 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-public class DbManager {
+public class DatabaseUserManager {
 
     private SQLiteDatabase database;
     private DatabaseHelper dbHelper;
@@ -22,11 +21,11 @@ public class DbManager {
     public static final String KEY_TUTORIAL = "tutorial";
 
 
-    public DbManager(Context context) {
+    public DatabaseUserManager(Context context) {
         this.context = context;
     }
 
-    public DbManager open() throws SQLException {
+    public DatabaseUserManager open() throws SQLException {
         dbHelper = new DatabaseHelper(context);
         database = dbHelper.getWritableDatabase();
         return this;
