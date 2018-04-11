@@ -12,14 +12,12 @@ import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseUserManager;
 
 public class ProfileActivity extends Activity {
 
-    TextView welcomUserProfile;
-    TextView userProfile;
-    TextView emailProfile;
-
+    private TextView welcomUserProfile;
+    private TextView userProfile;
+    private TextView emailProfile;
 
     private DatabaseUserManager databaseUserManager;
-    Cursor cursor ;
-
+    private Cursor cursor ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +25,7 @@ public class ProfileActivity extends Activity {
         setContentView(R.layout.activity_profile);
 
         Intent profile = getIntent();
-        String email = profile.getStringExtra("email");
-        String password = profile.getStringExtra("password");
-
-        Log.d("username", email);
-        Log.d("password", password);
-
-
+        int userId = profile.getIntExtra("userId",0);
 
         welcomUserProfile = (TextView)findViewById(R.id.welcomeUser);
         userProfile = (TextView)findViewById(R.id.username_profile);
@@ -43,7 +35,7 @@ public class ProfileActivity extends Activity {
         databaseUserManager.open();
 
 
-        cursor = databaseUserManager.selectUser(email, password);
+        cursor = databaseUserManager.selectUserById(userId);
         if (cursor != null && cursor.getCount()>0) {
             cursor.moveToFirst();
 

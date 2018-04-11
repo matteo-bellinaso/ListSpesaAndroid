@@ -94,6 +94,10 @@ public class DatabaseUserManager {
         return database.query(DATABASE_TABLE, columns,"email = '"+email+"' AND password = '"+password+"'",null,null,null,null);
     }
 
+    public Cursor selectUserById(int id){
+        return database.query(DATABASE_TABLE, null,KEY_USERID + "=" + id,null,null,null,null);
+    }
+
     public boolean updateTutorial(int id,int userId){
         ContentValues tutoVal = tutorialValue(id);
         return database.update(DATABASE_TABLE, tutoVal, KEY_USERID + "=" + userId, null) > 0;

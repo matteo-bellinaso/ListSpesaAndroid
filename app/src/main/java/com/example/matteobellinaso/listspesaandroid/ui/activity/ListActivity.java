@@ -1,5 +1,6 @@
 package com.example.matteobellinaso.listspesaandroid.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +30,12 @@ public class ListActivity extends AppCompatActivity {
     public List<ItemList> itemLists  = new ArrayList<ItemList>();
 
     @Override
+    public void onBackPressed() {
+        moveTaskToBack(false);
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
@@ -50,6 +57,17 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Utils.deleteSharedPreferences(getApplicationContext());
+            }
+        });
+
+        Button profile = (Button) findViewById(R.id.profile);
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),ProfileActivity.class);
+                intent.putExtra("userId",Utils.readId(getApplicationContext()));
+                startActivity(intent);
             }
         });
 
