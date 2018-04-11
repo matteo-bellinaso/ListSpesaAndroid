@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">ListSpesaAndroid</string>
+    <string name="loginTitle">FaiSpesa</string>
+    <string name="emailPlaceholder">Email</string>
+    <string name="passwordPlaceholder">Password</string>
+    <string name="loginButtonText">ACCEDI</string>
+    <string name="loginOrText">oppure</string>
+    <string name="loginRegisterText">Crea un account</string>
+
     <string name="nome_cognome">Nome e Cognome</string>
     <string name="email">Email</string>
     <string name="password">Password</string>

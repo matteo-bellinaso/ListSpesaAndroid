@@ -3,6 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="fontColor">#225081</color>
+    <color name="lightBlue">#59afe1</color>
     <color name="font">#225081</color>
     <color name="registrazione_color">#515C7A</color>
     <color name="bottone">#59AFE1</color>
