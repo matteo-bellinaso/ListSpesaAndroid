@@ -27,5 +27,12 @@ public class ItemList {
         return this.itemList;
     }
 
+    public String getName(){
+        return name;
+    }
+
+    public String getUri(){
+        return img;
+    }
 
 }
