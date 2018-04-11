@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.matteobellinaso.listspesaandroid.R;
 import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseUserManager;
@@ -63,9 +63,9 @@ public class LoginActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     if (emailValue.getText() != null && passwordValue.getText() != null) {
                         cursor = databaseUserManager.selectUser(String.valueOf(emailValue.getText()), String.valueOf(passwordValue.getText()));
+                        cursor.moveToFirst();
+                        if (cursor.getCount() == 0 && cursor != null && cursor.moveToFirst()) {
 
-                        if (cursor != null) {
-                            cursor.moveToFirst();
                             //Log.d("DB", "" + cursor.getString(cursor.getColumnIndex(DatabaseUserManager.KEY_EMAIL)) + " - " + cursor.getString(cursor.getColumnIndex(DatabaseUserManager.KEY_PASSWORD)));
                             int result = cursor.getInt(cursor.getColumnIndex(DatabaseUserManager.KEY_TUTORIAL));
                             Calendar calendar = Calendar.getInstance();
@@ -76,10 +76,11 @@ public class LoginActivity extends AppCompatActivity {
                                 Intent tutorialIntent = new Intent(getApplicationContext(), TutorialActivity.class);
                                 startActivity(tutorialIntent);
                             }
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Utente Non Trovato", Toast.LENGTH_LONG).show();
                         }
 
                     }
-                    databaseUserManager.close();
                 }
             });
 

@@ -58,6 +58,9 @@ public class RegistrazioneActivity extends Activity {
 
                 databaseUserManager.createUser(emailText,usernameText,passwordText,"-",1);
                 databaseUserManager.close();
+
+                Intent tutorialIntent = new Intent(getApplicationContext(), TutorialActivity.class);
+                startActivity(tutorialIntent);
             }
         } );
 
