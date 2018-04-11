@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:text="@string/text_tutorial_first_1"
+        style="@style/tutorial_title" />
+
+    <TextView
+        android:text="@string/text_tutorial_first_2"
+       style="@style/tutorial_description" />
+
+    <ImageView
+        android:background="@drawable/logo_app"
+       style="@style/tutorial_img" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <Button
+        style="@style/button_tutorial"
+        android:text="@string/button_tutorial_skip"
+        android:layout_gravity="left"
+        android:id="@+id/button_tutorial_skip"/>
+
+        <ImageView
+            style="@style/tutorial_img_bottom"
+            android:background="@drawable/one" />
+
+        <Button
+            style="@style/button_tutorial"
+            android:text="@string/button_tutorial_next"
+            android:id="@+id/button_tutorial_next"/>
+    </LinearLayout>
+
+</LinearLayout>
