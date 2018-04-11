@@ -5,6 +5,16 @@
     <dimen name="registrati_fontsize">20dp</dimen>
     <dimen name="registrati_fontsize_form">16dp</dimen>
 
+    <dimen name="loginTitleMargin">40dp</dimen>
+    <dimen name="loginTitleSize">25sp</dimen>
+    <dimen name="loginEmailMargin">40dp</dimen>
+    <dimen name="loginPasswordMargin">20dp</dimen>
+    <dimen name="loginButtonWidth">200dp</dimen>
+    <dimen name="loginButtonMargin">40dp</dimen>
+    <dimen name="loginOrMargin">40dp</dimen>
+    <dimen name="loginRegisterMargin">20dp</dimen>
+    <dimen name="loginRegisterTextSize">18sp</dimen>
+
     <dimen name="tutorial_text_title">35dp</dimen>
     <dimen name="margin_top_tutorial_title">40dp</dimen>
     <dimen name="padding_tutorial_title">30dp</dimen>

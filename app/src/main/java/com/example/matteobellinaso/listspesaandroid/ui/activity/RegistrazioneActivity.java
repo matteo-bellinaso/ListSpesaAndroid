@@ -56,7 +56,7 @@ public class RegistrazioneActivity extends Activity {
                 emailText = email.getText().toString();
                 passwordText = password.getText().toString();
 
-                databaseUserManager.createUser(emailText,usernameText,passwordText,"-",true);
+                databaseUserManager.createUser(emailText,usernameText,passwordText,"-",1);
                 databaseUserManager.close();
             }
         } );

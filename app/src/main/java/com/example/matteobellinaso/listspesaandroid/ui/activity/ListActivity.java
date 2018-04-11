@@ -26,6 +26,11 @@ public class ListActivity extends AppCompatActivity {
     public List<ItemList> itemLists  = new ArrayList<ItemList>();
 
     @Override
+    public void onBackPressed() {
+        moveTaskToBack(false);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
