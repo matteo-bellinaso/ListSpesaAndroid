@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.matteobellinaso.listspesaandroid.R;
+import com.example.matteobellinaso.listspesaandroid.ui.activity.ListActivity;
 import com.example.matteobellinaso.listspesaandroid.ui.activity.MainActivity;
 
 /**
@@ -30,7 +31,7 @@ public class FragmentTutorialThird extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getContext(), MainActivity.class);
+                Intent intent = new Intent(getContext(), ListActivity.class);
                 startActivity(intent);
 
             }
@@ -42,7 +43,7 @@ public class FragmentTutorialThird extends Fragment {
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), MainActivity.class);
+                Intent intent = new Intent(getContext(), ListActivity.class);
                 startActivity(intent);
 
 
