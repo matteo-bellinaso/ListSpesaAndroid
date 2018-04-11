@@ -12,6 +12,7 @@ import android.widget.Button;
 import com.example.matteobellinaso.listspesaandroid.R;
 import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseUserManager;
 import com.example.matteobellinaso.listspesaandroid.logic.Utils;
+import com.example.matteobellinaso.listspesaandroid.ui.activity.ListActivity;
 import com.example.matteobellinaso.listspesaandroid.ui.activity.MainActivity;
 
 /**

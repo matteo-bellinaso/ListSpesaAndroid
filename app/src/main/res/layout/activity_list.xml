@@ -6,19 +6,36 @@
     android:layout_height="match_parent"
     tools:context="com.example.matteobellinaso.listspesaandroid.ui.activity.ListActivity">
 
-    <!--<android.support.v7.widget.RecyclerView
-        android:id="@+id/my_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical">-->
-
         <Button
             android:id="@+id/logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="LogOut" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <!--</android.support.v7.widget.RecyclerView>-->
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/my_recycler_view"
+        android:scrollbars="vertical"
+        tools:context="com.example.matteobellinaso.listspesaandroid.ui.activity.ListActivity">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floating_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="50dp"
+        android:paddingRight="40dp"
+        android:background="@drawable/ic_launcher_foreground"
+        />
 
 
 </RelativeLayout>
