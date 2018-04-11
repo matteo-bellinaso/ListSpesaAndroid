@@ -9,4 +9,11 @@
     <string name="text_tutorial_second_2">Aggiorna la tua lista con gli articoli che vuoi acquistare</string>
     <string name="text_tutorial_third_1">Fai la spesa</string>
     <string name="text_tutorial_third_2">Fai la spesa e aggiorna la tua lista</string>
+    <string name="loginTitle">FaiSpesa</string>
+    <string name="emailPlaceholder">Email</string>
+    <string name="passwordPlaceholder">Password</string>
+    <string name="loginButtonText">ACCEDI</string>
+    <string name="loginOrText">oppure</string>
+    <string name="loginRegisterText">Crea un account</string>
+
 </resources>
