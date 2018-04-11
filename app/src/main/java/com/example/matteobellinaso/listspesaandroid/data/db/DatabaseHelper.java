@@ -16,7 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Lo statement SQL di creazione del database
     private static final String DATABASE_CREATE =
-            "CREATE TABLE users (_id integer primary key autoincrement,"+KEY_EMAIL+" varchar(255), "+KEY_NAME+" varchar(255), "+KEY_PASSWORD+" varchar(255), "+KEY_IMG+" varchar(255), "+KEY_TUTORIAL+" boolean);";
+            "CREATE TABLE users (_id integer primary key autoincrement,"+KEY_EMAIL+" varchar(255), "+KEY_NAME+" varchar(255), "+KEY_PASSWORD+" varchar(255), "+KEY_IMG+" varchar(255), "+KEY_TUTORIAL+" int);";
 
     // Costruttore
     public DatabaseHelper(Context context) {

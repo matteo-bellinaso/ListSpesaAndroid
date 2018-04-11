@@ -34,7 +34,7 @@ public class DatabaseUserManager {
         dbHelper.close();
     }
 
-    private ContentValues createContentUserValues(String email,String name, String password, String img, boolean tutorial) {
+    private ContentValues createContentUserValues(String email,String name, String password, String img, int tutorial) {
         ContentValues values = new ContentValues();
         values.put(KEY_EMAIL, email);
         values.put(KEY_NAME, name);
@@ -45,12 +45,12 @@ public class DatabaseUserManager {
     }
 
     //create a contact
-    public long createUser(String email, String name, String password, String img, boolean tutorial) {
+    public long createUser(String email, String name, String password, String img, int tutorial) {
         ContentValues initialValues = createContentUserValues(email,name, password, img, tutorial) ;
         return database.insertOrThrow(DATABASE_TABLE, null, initialValues);
     }
     //update a contact
-    public boolean updateUser( long userID, String email, String name, String password, String img, boolean tutorial) {
+    public boolean updateUser( long userID, String email, String name, String password, String img, int tutorial) {
         ContentValues updateValues = createContentUserValues(email,name, password, img,tutorial);
         return database.update(DATABASE_TABLE, updateValues, KEY_USERID + "=" + userID, null) > 0;
     }
@@ -64,7 +64,7 @@ public class DatabaseUserManager {
     }
 
     public Cursor selectUser(String email, String password){
-        String[] columns = new String[]{KEY_EMAIL,KEY_PASSWORD};
+        String[] columns = new String[]{KEY_TUTORIAL};
         return database.query(DATABASE_TABLE, columns,"email = '"+email+"' AND password = '"+password+"'",null,null,null,null);
     }
 }

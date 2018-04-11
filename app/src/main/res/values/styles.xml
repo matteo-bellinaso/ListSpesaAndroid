@@ -30,4 +30,48 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+
+    <style name="tutorial_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+       <item name="android:textSize">@dimen/tutorial_text_title</item>
+        <item name="android:textColor">@color/fontColor</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:paddingLeft">@dimen/padding_tutorial_title</item>
+        <item name="android:paddingRight">@dimen/padding_tutorial_title</item>
+        <item name="android:layout_marginTop">@dimen/margin_top_tutorial_title</item>
+    </style>
+
+
+    <style name="tutorial_description">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/tutorial_text_description</item>
+        <item name="android:padding">@dimen/padding_tutorial_text</item>
+         <item name="android:textAlignment">center</item>
+        <item name="android:layout_marginTop">@dimen/margin_top_tutorial_text</item>
+        <item name="android:textColor">@color/fontColor</item>
+    </style>
+
+    <style name="tutorial_img">
+        <item name="android:layout_width">@dimen/tutorial_img</item>
+        <item name="android:layout_height">@dimen/tutorial_img</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:padding">@dimen/padding_tutorial_title</item>
+        <item name="android:layout_margin">@dimen/tutorial_img_margin</item>
+    </style>
+
+    <style name="button_tutorial">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@null</item>
+        <item name="android:textColor">@color/fontColor</item>
+    </style>
+
+    <style name="tutorial_img_bottom">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/tutorial_img_margin</item>
+        <item name="android:layout_marginRight">@dimen/tutorial_img_margin</item>
+    </style>
 </resources>
