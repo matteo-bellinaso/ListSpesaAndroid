@@ -14,6 +14,8 @@
     <string name="accountTrue">Hai già un account</string>
     <string name="accedi_ora"><u>Accedi ora</u></string>
     <string name="crea_account">Crea un Account</string>
+    <string name="intro_user">Modifica le impostazioni di base del tuo account</string>
+    <string name="nome_utente">Nome utente</string>
 
 
     <string name="button_tutorial_skip">Skip</string>

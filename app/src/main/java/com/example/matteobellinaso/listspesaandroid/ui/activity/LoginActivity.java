@@ -49,14 +49,13 @@ public class LoginActivity extends AppCompatActivity {
 
         databaseUserManager = new DatabaseUserManager(this);
         databaseUserManager.open();
-        Log.d("cursor",""+databaseUserManager.createList("Lista","-",1));
 
-        doLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (emailValue.getText() != null && passwordValue.getText() != null) {
-                    cursor = databaseUserManager.selectUser(String.valueOf(emailValue.getText()), String.valueOf(passwordValue.getText()));
-                    if (cursor != null && cursor.moveToFirst()) {
+
+            doLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (emailValue.getText() != null && passwordValue.getText() != null) {
+                        cursor = databaseUserManager.selectUser(String.valueOf(emailValue.getText()), String.valueOf(passwordValue.getText()));
 
                         int id = cursor.getInt(cursor.getColumnIndex(DatabaseUserManager.KEY_USERID));
                         int result = cursor.getInt(cursor.getColumnIndex(DatabaseUserManager.KEY_TUTORIAL));
@@ -65,6 +64,15 @@ public class LoginActivity extends AppCompatActivity {
                         Long timeStamp = calendar.getTimeInMillis();
                         Utils.writeOnSharedPreferences(timeStamp, id, getApplicationContext());
 
+                            if(result == 1) {
+                                Intent tutorialIntent = new Intent(getApplicationContext(), ProfileActivity.class);
+                                tutorialIntent.putExtra("email", String.valueOf(emailValue.getText()));
+                                tutorialIntent.putExtra("password", String.valueOf(passwordValue.getText()));
+                                startActivity(tutorialIntent);
+                            }
+                        }else{
+                        databaseUserManager.close();
+                        }
                         if (result == 1) {
                             databaseUserManager.close();
                             Intent tutorialIntent = new Intent(getApplicationContext(), TutorialActivity.class);
