@@ -20,6 +20,8 @@
 
         <activity android:name=".ui.activity.RegistrazioneActivity"></activity>
         <activity android:name=".ui.activity.TutorialActivity"></activity>
+
+        <activity android:name=".ui.activity.ListActivity"></activity>
     </application>
 
 </manifest>
