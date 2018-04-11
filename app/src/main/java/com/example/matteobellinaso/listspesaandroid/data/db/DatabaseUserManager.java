@@ -64,7 +64,6 @@ public class DatabaseUserManager {
     }
 
     public Cursor selectUser(String email, String password){
-        String[] columns = new String[]{KEY_TUTORIAL};
-        return database.query(DATABASE_TABLE, columns,"email = '"+email+"' AND password = '"+password+"'",null,null,null,null);
+        return database.query(DATABASE_TABLE, null,"email = '"+email+"' AND password = '"+password+"'",null,null,null,null);
     }
 }

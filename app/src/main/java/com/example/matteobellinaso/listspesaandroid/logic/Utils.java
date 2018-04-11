@@ -16,6 +16,7 @@ public class Utils {
         editor.commit();
     }
 
+
     public static Long readOnSharedPreferences(Context context){
         SharedPreferences sharedPref = context.getSharedPreferences(TIMESTAMP,Context.MODE_PRIVATE);
         return sharedPref.getLong(TIMESTAMP_VALUE,0);
@@ -24,4 +25,5 @@ public class Utils {
     public static String convertDate(String dateInMilliseconds,String dateFormat) {
         return DateFormat.format(dateFormat, Long.parseLong(dateInMilliseconds)).toString();
     }
+
 }

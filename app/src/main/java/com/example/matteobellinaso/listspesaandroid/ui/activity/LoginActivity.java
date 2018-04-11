@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (emailValue.getText() != null && passwordValue.getText() != null) {
                         cursor = databaseUserManager.selectUser(String.valueOf(emailValue.getText()), String.valueOf(passwordValue.getText()));
 
-                        if (cursor != null) {
+                        if (cursor != null && cursor.moveToFirst()) {
                             cursor.moveToFirst();
                             //Log.d("DB", "" + cursor.getString(cursor.getColumnIndex(DatabaseUserManager.KEY_EMAIL)) + " - " + cursor.getString(cursor.getColumnIndex(DatabaseUserManager.KEY_PASSWORD)));
                             int result = cursor.getInt(cursor.getColumnIndex(DatabaseUserManager.KEY_TUTORIAL));
@@ -73,9 +73,13 @@ public class LoginActivity extends AppCompatActivity {
                             Utils.writeOnSharedPreferences(timeStamp, getApplicationContext());
 
                             if(result == 1) {
-                                Intent tutorialIntent = new Intent(getApplicationContext(), TutorialActivity.class);
+                                Intent tutorialIntent = new Intent(getApplicationContext(), ProfileActivity.class);
+                                tutorialIntent.putExtra("email", String.valueOf(emailValue.getText()));
+                                tutorialIntent.putExtra("password", String.valueOf(passwordValue.getText()));
                                 startActivity(tutorialIntent);
                             }
+                        }else{
+                            Log.d("crash","-");
                         }
 
                     }

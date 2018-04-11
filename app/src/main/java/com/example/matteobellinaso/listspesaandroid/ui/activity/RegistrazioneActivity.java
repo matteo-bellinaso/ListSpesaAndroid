@@ -48,6 +48,17 @@ public class RegistrazioneActivity extends Activity {
         databaseUserManager = new DatabaseUserManager(this);
         databaseUserManager.open();
 
+        ImageView imgFavorite = (ImageView) findViewById(R.id.img_profilo);
+        imgFavorite.setClickable(true);
+        imgFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
+            }
+        });
+
         Button registrati = findViewById(R.id.registrati_toDB);
         registrati.setOnClickListener(new View.OnClickListener (){
             @Override
@@ -60,17 +71,6 @@ public class RegistrazioneActivity extends Activity {
                 databaseUserManager.close();
             }
         } );
-
-        ImageView imgFavorite = (ImageView) findViewById(R.id.img_profilo);
-        imgFavorite.setClickable(true);
-        imgFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                photoPickerIntent.setType("image/*");
-                startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
-            }
-        });
 
         Button accedi = findViewById(R.id.accediToLogin);
         accedi.setOnClickListener(new View.OnClickListener (){
