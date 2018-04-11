@@ -13,12 +13,15 @@ public class DatabaseUserManager {
     private Context context;
     // Database constants
     private static final String DATABASE_TABLE = "users";
+    private static final String DATABASE_LIST = "itemlist";
     public static final String KEY_USERID = "_id";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_NAME = "name";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_IMG = "img";
     public static final String KEY_TUTORIAL = "tutorial";
+    public static final String KEY_LIST_USERID= "userId";
+
 
 
     public DatabaseUserManager(Context context) {
@@ -44,11 +47,33 @@ public class DatabaseUserManager {
         return values;
     }
 
+    private ContentValues tutorialValue(int id){
+        ContentValues value = new ContentValues();
+        value.put(KEY_TUTORIAL,id);
+        return value;
+    }
+
+    private ContentValues createContentListValues(String name, String img, int userId) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, name);
+        values.put(KEY_IMG, img);
+        values.put(KEY_LIST_USERID, userId);
+        return values;
+    }
+
+
     //create a contact
     public long createUser(String email, String name, String password, String img, int tutorial) {
         ContentValues initialValues = createContentUserValues(email,name, password, img, tutorial) ;
         return database.insertOrThrow(DATABASE_TABLE, null, initialValues);
     }
+
+    //create a contact
+    public long createList(String name, String img, int userId) {
+        ContentValues initialValues = createContentListValues(name, img, userId) ;
+        return database.insertOrThrow(DATABASE_LIST, null, initialValues);
+    }
+
     //update a contact
     public boolean updateUser( long userID, String email, String name, String password, String img, int tutorial) {
         ContentValues updateValues = createContentUserValues(email,name, password, img,tutorial);
@@ -64,6 +89,12 @@ public class DatabaseUserManager {
     }
 
     public Cursor selectUser(String email, String password){
-        return database.query(DATABASE_TABLE, null,"email = '"+email+"' AND password = '"+password+"'",null,null,null,null);
+        String[] columns = new String[]{KEY_TUTORIAL, KEY_USERID};
+        return database.query(DATABASE_TABLE, columns,"email = '"+email+"' AND password = '"+password+"'",null,null,null,null);
+    }
+
+    public boolean updateTutorial(int id,int userId){
+        ContentValues tutoVal = tutorialValue(id);
+        return database.update(DATABASE_TABLE, tutoVal, KEY_USERID + "=" + userId, null) > 0;
     }
 }

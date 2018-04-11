@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.matteobellinaso.listspesaandroid.R;
 import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseUserManager;
@@ -25,26 +25,20 @@ public class LoginActivity extends AppCompatActivity {
     private Calendar currentCalendar;
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Utils.readOnSharedPreferences(this) != null) {
+
+        setContentView(R.layout.login_layout);
+
+        if (Utils.readTimestamp(this) != null) {
             calendar = Calendar.getInstance();
             currentCalendar = Calendar.getInstance();
-            calendar.setTimeInMillis(Utils.readOnSharedPreferences(this));
-            String token= Utils.convertDate(String.valueOf(Utils.readOnSharedPreferences(this)),"dd");
-            String current= Utils.convertDate(String.valueOf(currentCalendar.getTimeInMillis()),"dd");
-            Log.d("token","token: "+token+" - "+"current "+current);
-            if(!token.equals(current)) {
-                setContentView(R.layout.login_layout);
-            }else{
-                setContentView(R.layout.login_layout);
-                Intent listIntent = new Intent(this,ListActivity.class);
+            calendar.setTimeInMillis(Utils.readTimestamp(this));
+            String token = Utils.convertDate(String.valueOf(Utils.readTimestamp(this)), "dd");
+            String current = Utils.convertDate(String.valueOf(currentCalendar.getTimeInMillis()), "dd");
+            Log.d("token", "token: " + token + " - " + "current " + current);
+            if (token.equals(current)) {
+                Intent listIntent = new Intent(this, ListActivity.class);
                 startActivity(listIntent);
             }
         }
@@ -56,41 +50,42 @@ public class LoginActivity extends AppCompatActivity {
 
         databaseUserManager = new DatabaseUserManager(this);
         databaseUserManager.open();
+        Log.d("cursor",""+databaseUserManager.createList("Lista","-",1));
 
+        doLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (emailValue.getText() != null && passwordValue.getText() != null) {
+                    cursor = databaseUserManager.selectUser(String.valueOf(emailValue.getText()), String.valueOf(passwordValue.getText()));
+                    if (cursor != null && cursor.moveToFirst()) {
 
-            doLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (emailValue.getText() != null && passwordValue.getText() != null) {
-                        cursor = databaseUserManager.selectUser(String.valueOf(emailValue.getText()), String.valueOf(passwordValue.getText()));
+                        int id = cursor.getInt(cursor.getColumnIndex(DatabaseUserManager.KEY_USERID));
+                        int result = cursor.getInt(cursor.getColumnIndex(DatabaseUserManager.KEY_TUTORIAL));
 
-                        if (cursor != null && cursor.moveToFirst()) {
-                            cursor.moveToFirst();
-                            //Log.d("DB", "" + cursor.getString(cursor.getColumnIndex(DatabaseUserManager.KEY_EMAIL)) + " - " + cursor.getString(cursor.getColumnIndex(DatabaseUserManager.KEY_PASSWORD)));
-                            int result = cursor.getInt(cursor.getColumnIndex(DatabaseUserManager.KEY_TUTORIAL));
-                            Calendar calendar = Calendar.getInstance();
-                            Long timeStamp = calendar.getTimeInMillis();
-                            Utils.writeOnSharedPreferences(timeStamp, getApplicationContext());
+                        Calendar calendar = Calendar.getInstance();
+                        Long timeStamp = calendar.getTimeInMillis();
+                        Utils.writeOnSharedPreferences(timeStamp, id, getApplicationContext());
 
-                            if(result == 1) {
-                                Intent tutorialIntent = new Intent(getApplicationContext(), ProfileActivity.class);
-                                tutorialIntent.putExtra("email", String.valueOf(emailValue.getText()));
-                                tutorialIntent.putExtra("password", String.valueOf(passwordValue.getText()));
-                                startActivity(tutorialIntent);
-                            }
-                        }else{
-                            Log.d("crash","-");
+                        if (result == 1) {
+                            databaseUserManager.close();
+                            Intent tutorialIntent = new Intent(getApplicationContext(), TutorialActivity.class);
+                            startActivity(tutorialIntent);
+                        } else {
+                            databaseUserManager.close();
+                            Intent listIntent = new Intent(getApplicationContext(), ListActivity.class);
+                            startActivity(listIntent);
                         }
-
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Utente Non Trovato", Toast.LENGTH_LONG).show();
                     }
-                    databaseUserManager.close();
                 }
-            });
+            }
+        });
 
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),RegistrazioneActivity.class);
+                Intent intent = new Intent(getApplicationContext(), RegistrazioneActivity.class);
                 startActivity(intent);
             }
         });
