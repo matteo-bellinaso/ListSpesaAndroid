@@ -3,22 +3,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbars="vertical"
     android:orientation="vertical">
 
     <TextView
         android:text="@string/text_tutorial_third_1"
         style="@style/tutorial_title"
-        android:layout_marginBottom="30dp"/>
+        />
 
     <TextView
         android:text="@string/text_tutorial_third_2"
         style="@style/tutorial_description"
-        android:layout_marginBottom="50dp"/>
+        />
 
     <ImageView
         android:background="@drawable/step2"
         style="@style/tutorial_img"
-        android:layout_marginBottom="50dp"/>
+        />
 
 
     <LinearLayout

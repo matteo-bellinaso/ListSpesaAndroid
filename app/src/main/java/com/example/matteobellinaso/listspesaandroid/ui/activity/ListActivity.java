@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.matteobellinaso.listspesaandroid.R;
 import com.example.matteobellinaso.listspesaandroid.data.Item;
 import com.example.matteobellinaso.listspesaandroid.data.ItemList;
+import com.example.matteobellinaso.listspesaandroid.logic.Utils;
 import com.example.matteobellinaso.listspesaandroid.ui.adapter.MyRecyclerAdapter;
 
 import java.util.ArrayList;
@@ -26,25 +29,29 @@ public class ListActivity extends AppCompatActivity {
     public List<ItemList> itemLists  = new ArrayList<ItemList>();
 
     @Override
-    public void onBackPressed() {
-        moveTaskToBack(false);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        //mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
-        mRecyclerView.setHasFixedSize(true);
+        /*mRecyclerView.setHasFixedSize(true);
 
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mAdapter = new MyRecyclerAdapter(this, itemLists);
 
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);*/
+
+        Button logout = (Button) findViewById(R.id.logout);
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utils.deleteSharedPreferences(getApplicationContext());
+            }
+        });
 
     }
 
