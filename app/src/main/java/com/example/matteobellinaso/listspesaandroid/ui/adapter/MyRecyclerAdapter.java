@@ -30,7 +30,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
     private Cursor cursor;
     private DatabaseListManager databaseListManager;
     private Context contesto;
-    private int idToDetail;
+    private int[] idToDetail;
     private AlertDialog.Builder builder;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -54,8 +54,9 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
             root.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intentDetail = new Intent(finalContext, DetailActivity.class);
-                    intentDetail.putExtra("listId", idToDetail);
+                    Intent intentDetail = new Intent(contesto, DetailActivity.class);
+                    Log.d("iddetail",""+idToDetail[position]+" - "+ position);
+                    intentDetail.putExtra("listId", idToDetail[position]);
                     contesto.startActivity(intentDetail);
                 }
             });
@@ -108,6 +109,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         mInflater = LayoutInflater.from(context);
         cursor = databaseListManager.fetchAllList();
         contesto = context;
+        idToDetail = new int[cursor.getCount()];
     }
 
     @Override
@@ -124,7 +126,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
 
         cursor.moveToPosition(position);
 
-        idToDetail = cursor.getInt(cursor.getColumnIndex("_id"));
+        idToDetail[position] = cursor.getInt(cursor.getColumnIndex("_id"));
+        Log.d("iddetail","pos "+position);
         String nameList = cursor.getString(cursor.getColumnIndex(databaseListManager.KEY_LIST_NAME));
         holder.mTextView.setText(nameList);
         holder.setOnItemClickCustom(contesto, position);

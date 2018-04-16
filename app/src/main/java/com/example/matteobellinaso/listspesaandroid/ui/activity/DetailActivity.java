@@ -39,6 +39,7 @@ public class DetailActivity extends AppCompatActivity {
 
         final Intent getDetail = getIntent();
         listId = getDetail.getIntExtra("listId",0);
+        Log.d("iddetail",""+getDetail.getIntExtra("listId",0));
 
         databaseItemManager = new DatabaseItemManager(this);
         databaseItemManager.open();
@@ -60,16 +61,13 @@ public class DetailActivity extends AppCompatActivity {
                 if (currentCursor.getInt(currentCursor.getColumnIndex("checked")) == 0) {
                     checked.setVisibility(View.VISIBLE);
                     databaseItemManager.updateItem(currentCursor.getInt(currentCursor.getColumnIndex("_id")), 1);
-                    Log.d("check","Checked "+currentCursor.getInt(currentCursor.getColumnIndex("checked")));
                 } else {
                     checked.setVisibility(View.INVISIBLE);
                     databaseItemManager.updateItem(currentCursor.getInt(currentCursor.getColumnIndex("_id")), 0);
-                    Log.d("check","Unchecked "+currentCursor.getInt(currentCursor.getColumnIndex("checked")));
                 }
 
                 mAdapter.swapCursor(databaseItemManager.fetchFromId(listId));
                 listView.setAdapter(mAdapter);
-
             }
         });
 
