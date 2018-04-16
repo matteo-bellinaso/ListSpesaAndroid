@@ -25,6 +25,8 @@ import com.example.matteobellinaso.listspesaandroid.data.db.DbListManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.matteobellinaso.listspesaandroid.R.id.list_background;
+
 /**
  * Created by matteobellinaso on 09/04/18.
  */
@@ -40,7 +42,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
     public  class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mTextView;
-        private LinearLayout img;
+        private ImageView img;
         private View root;
 
         public ViewHolder(final View view) {
@@ -69,8 +71,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
                     builder.setPositiveButton((R.string.alert_confim), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            dbListManager.deleteList(position);
-                            notifyItemRemoved(position);
+                            dbListManager.deleteList(cursor.getInt(cursor.getColumnIndex(DbListManager.KEY_LIST_ID)));
+
                         }
                     });
                     builder.setNegativeButton((R.string.alert_undo), new DialogInterface.OnClickListener() {
@@ -87,9 +89,16 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
             });
 
         }
+    }
 
+    public void swapCursor(){
 
+        if(cursor != null && !cursor.isClosed()){
+            cursor.close();
+        }
 
+        cursor = dbListManager.fetchAllList();
+        notifyDataSetChanged();
     }
 
     public MyRecyclerAdapter(Context context){
@@ -119,7 +128,13 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         String nameList = cursor.getString(cursor.getColumnIndex(dbListManager.KEY_LIST_NAME));
         holder.mTextView.setText(nameList);
         holder.setOnItemClickCustom(contesto, position);
-        String img = cursor.getString(cursor.getColumnIndex(dbListManager.KEY_LIST_IMG));
+
+        String imgString =  cursor.getString(cursor.getColumnIndex(dbListManager.KEY_LIST_IMG));
+
+        int imgResource = contesto.getResources().getIdentifier(imgString, "drawable", contesto.getPackageName());
+        Drawable image = contesto.getResources().getDrawable(imgResource, null);
+        holder.img.setImageDrawable(image);
+
 
        /* String  uri = cursor.getString(cursor.getColumnIndex(DbListManager.KEY_LIST_IMG));
         try{

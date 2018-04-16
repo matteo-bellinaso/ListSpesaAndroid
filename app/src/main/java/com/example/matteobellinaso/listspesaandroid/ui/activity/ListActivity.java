@@ -1,12 +1,17 @@
 package com.example.matteobellinaso.listspesaandroid.ui.activity;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -30,6 +35,7 @@ public class ListActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private DbListManager dbListManager;
+    private Context mContext;
 
     @Override
     public void onBackPressed() {
@@ -60,13 +66,15 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
             }
         });
-
-
-
-
     }
 
+
+    public void addListDialog(){
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflate = this.getLayoutInflater();
+    }
 
 }
