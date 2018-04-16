@@ -8,6 +8,7 @@ public class Utils {
 
     private static final String TIMESTAMP = "timestamp";
     private static final String TIMESTAMP_VALUE = "timestamp_value";
+    private static final String USERNAME_VALUE = "username_value";
 
     public static void writeOnSharedPreferences(Long timestamp, Context context){
         SharedPreferences sharedPref = context.getSharedPreferences(TIMESTAMP,Context.MODE_PRIVATE);
@@ -24,4 +25,10 @@ public class Utils {
     public static String convertDate(String dateInMilliseconds,String dateFormat) {
         return DateFormat.format(dateFormat, Long.parseLong(dateInMilliseconds)).toString();
     }
+
+    public static int readId(Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences(TIMESTAMP,Context.MODE_PRIVATE);
+        return sharedPref.getInt(USERNAME_VALUE,0);
+    }
+
 }
