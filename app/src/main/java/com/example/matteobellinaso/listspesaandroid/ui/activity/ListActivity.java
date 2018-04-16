@@ -62,7 +62,7 @@ public class ListActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.userIcon: {
                 Intent intent = new Intent(this, ProfileActivity.class);
-                intent.putExtra("userId",Utils.readId(getApplicationContext()));
+                intent.putExtra("userId",Utils.readId(this));
                 startActivity(intent);
                 return true;
             }
@@ -110,6 +110,7 @@ public class ListActivity extends AppCompatActivity {
         dialogBuilder.setView(dialogView);
         final EditText edit = (EditText) dialogView.findViewById(R.id.edit_add_list);
         dialogBuilder.setTitle(R.string.add_name_list);
+
         dialogBuilder.setPositiveButton(R.string.alert_confim, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -127,9 +128,13 @@ public class ListActivity extends AppCompatActivity {
             }
         });
         mRecyclerView.setAdapter(mAdapter);
-        databaseListManager.close();
-    }
-
         dialogBuilder.show();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        databaseListManager.close();
+    }
+}
 

@@ -53,7 +53,7 @@ public class RegistrazioneActivity extends Activity {
         imgFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                Intent photoPickerIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 photoPickerIntent.setType("image/*");
                 startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
             }
@@ -67,7 +67,7 @@ public class RegistrazioneActivity extends Activity {
                 emailText = email.getText().toString();
                 passwordText = password.getText().toString();
 
-                databaseUserManager.createUser(emailText,usernameText,passwordText,"-",1);
+                databaseUserManager.createUser(emailText,usernameText,passwordText,pathImmagine,1);
                 databaseUserManager.close();
 
                 Intent tutorialIntent = new Intent(getApplicationContext(), TutorialActivity.class);
@@ -99,7 +99,7 @@ public class RegistrazioneActivity extends Activity {
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                 imgFavorite.setImageBitmap(selectedImage);
 
-                pathImmagine = imageUri.getPath();
+                pathImmagine = getStringFromUri(imageUri);
 
 
             } catch (FileNotFoundException e) {
@@ -110,5 +110,16 @@ public class RegistrazioneActivity extends Activity {
         }else {
             Toast.makeText(getApplicationContext(), "You haven't picked Image",Toast.LENGTH_LONG).show();
         }
+    }
+
+    public String getStringFromUri(Uri uri){
+        String stringUri;
+        stringUri = uri.toString();
+        return stringUri;
+    }
+
+    public Uri getUriFromString(String stringUri){
+        Uri uri = Uri.parse(stringUri);
+        return uri;
     }
 }

@@ -36,9 +36,4 @@ public class Utils {
         return DateFormat.format(dateFormat, Long.parseLong(dateInMilliseconds)).toString();
     }
 
-    public static int readId(Context context){
-        SharedPreferences sharedPref = context.getSharedPreferences(TIMESTAMP,Context.MODE_PRIVATE);
-        return sharedPref.getInt(USERNAME_VALUE,0);
-    }
-
 }

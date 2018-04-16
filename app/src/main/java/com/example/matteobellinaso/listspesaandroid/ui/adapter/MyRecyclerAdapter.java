@@ -79,7 +79,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
                         public void onClick(DialogInterface dialog, int which) {
                             databaseListManager.deleteList(cursor.getInt(cursor.getColumnIndex("_id")));
                             notifyItemRemoved(position);
-                            databaseListManager.deleteList(cursor.getInt(cursor.getColumnIndex(DbListManager.KEY_LIST_ID)));
+                            databaseListManager.deleteList(cursor.getInt(cursor.getColumnIndex(databaseListManager.KEY_LIST_ID)));
                             swapCursor();
 
                         }
