@@ -30,25 +30,16 @@
 
             <TextView
                 android:id="@+id/list_name"
-                android:layout_width="315dp"
+                android:layout_width="match_parent"
                 android:layout_height="90dp"
                 android:ellipsize="end"
                 android:gravity="left|center"
                 android:maxLines="1"
                 android:padding="@dimen/padding_tutorial_text"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="25dp" />
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:textStyle="bold"/>
 
-
-        <Button
-
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_weight="1"
-            android:gravity="right|center"
-            android:background="@drawable/more"
-            android:id="@+id/info_list_button"
-            />
 
         </LinearLayout>
 

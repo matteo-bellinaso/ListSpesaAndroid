@@ -1,11 +1,13 @@
 package com.example.matteobellinaso.listspesaandroid.ui.adapter;
 
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.AlertDialog;
+import android.net.Uri;
+import android.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +46,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         private TextView mTextView;
         private ImageView img;
         private View root;
+        AlertDialog.Builder builder;
 
         public ViewHolder(final View view) {
             super(view);
@@ -55,25 +58,23 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
 
         public void setOnItemClickCustom(Context context, final int position){
             context = root.getContext();
-            final Context finalContext = context;
+            builder = new AlertDialog.Builder(context);
+
             root.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
 
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(finalContext);
                     cursor.moveToPosition(position);
                     dbListManager.open();
 
                     builder.setTitle(R.string.alert_remove_list);
-                    builder.setMessage("vuoi eliminare la lista" + cursor.getString(cursor.getColumnIndex(dbListManager.KEY_LIST_NAME)) + "?");
+                    builder.setMessage("vuoi eliminare la lista " + cursor.getString(cursor.getColumnIndex(dbListManager.KEY_LIST_NAME)) + " ?");
 
                     builder.setPositiveButton((R.string.alert_confim), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dbListManager.deleteList(cursor.getInt(cursor.getColumnIndex(DbListManager.KEY_LIST_ID)));
                             swapCursor();
-
                         }
                     });
                     builder.setNegativeButton((R.string.alert_undo), new DialogInterface.OnClickListener() {
@@ -82,9 +83,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
                             dialog.cancel();
                         }
                     });
-
                     builder.show();
-
                     return true;
                 }
             });
@@ -93,11 +92,9 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
     }
 
     public void swapCursor(){
-
         if(cursor != null && !cursor.isClosed()){
             cursor.close();
         }
-
         cursor = dbListManager.fetchAllList();
         notifyDataSetChanged();
     }
@@ -116,8 +113,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         View v = mInflater.inflate(R.layout.item_layout_list, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
 
-
-
         return viewHolder;
     }
 
@@ -130,33 +125,27 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         holder.mTextView.setText(nameList);
         holder.setOnItemClickCustom(contesto, position);
 
-        String imgString =  cursor.getString(cursor.getColumnIndex(dbListManager.KEY_LIST_IMG));
-
-        //int imgResource = contesto.getResources().getIdentifier(imgString, "drawable", contesto.getPackageName());
-        //Drawable image = contesto.getResources().getDrawable(imgResource, null);
-        //holder.img.setImageDrawable(image);
-
-
-       /* String  uri = cursor.getString(cursor.getColumnIndex(DbListManager.KEY_LIST_IMG));
+        String  uri = cursor.getString(cursor.getColumnIndex(DbListManager.KEY_LIST_IMG));
         try{
-            if(uri != null && uri.length() >0) {
-                int imgResource = contesto.getResources().getIdentifier(uri, "drawable", contesto.getPackageName());
-                Drawable image = contesto.getResources().getDrawable(imgResource , null);
-                holder.img.setBackground(image);
+            if(uri != null && uri.length() > 0) {
+                holder.img.setImageURI(getUriFromString(uri));
+            }else{
+                holder.img.setImageURI(null);
+                holder.mTextView.setTextColor(contesto.getColor(R.color.fontColor));
             }
         }catch(Exception e){
             Log.w("LIST_EXAMPLE", "Exception while retrieving resource " + uri);
         }
-        */
-
-
-
     }
 
     @Override
     public int getItemCount() {
-        Log.d("count", ""+cursor.getCount());
         return cursor.getCount();
+    }
+
+    public Uri getUriFromString(String stringUri) {
+        Uri uri = Uri.parse(stringUri);
+        return uri;
     }
 
 

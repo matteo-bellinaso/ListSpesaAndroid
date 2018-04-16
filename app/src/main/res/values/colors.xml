@@ -8,6 +8,6 @@
     <color name="font">#225081</color>
     <color name="registrazione_color">#515C7A</color>
     <color name="bottone">#59AFE1</color>
-    <color name="white">#FFFFFF</color>
-    <color name="orange">#ffa500</color>
+    <color name="white">#ffffff</color>
+    <color name="yellow">#ffee00</color>
 </resources>
