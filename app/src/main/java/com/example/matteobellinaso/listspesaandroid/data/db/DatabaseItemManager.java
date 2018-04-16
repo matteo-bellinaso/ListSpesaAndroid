@@ -65,4 +65,8 @@ public class DatabaseItemManager {
         ContentValues updateValues = contentCheck(check);
         return database.update(DATABASE_TABLE, updateValues, KEY_LIST_ID + "=" + id, null) > 0;
     }
+
+    public Cursor checkedValues(int id){
+           return database.query(DATABASE_TABLE, null,KEY_LIST_LISTID +" = "+id+" AND "+KEY_LIST_CHECK+" = "+0,null,null,null,null);
+    }
 }
