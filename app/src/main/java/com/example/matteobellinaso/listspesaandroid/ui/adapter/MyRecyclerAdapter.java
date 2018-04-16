@@ -72,6 +72,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dbListManager.deleteList(cursor.getInt(cursor.getColumnIndex(DbListManager.KEY_LIST_ID)));
+                            swapCursor();
 
                         }
                     });
@@ -131,9 +132,9 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
 
         String imgString =  cursor.getString(cursor.getColumnIndex(dbListManager.KEY_LIST_IMG));
 
-        int imgResource = contesto.getResources().getIdentifier(imgString, "drawable", contesto.getPackageName());
-        Drawable image = contesto.getResources().getDrawable(imgResource, null);
-        holder.img.setImageDrawable(image);
+        //int imgResource = contesto.getResources().getIdentifier(imgString, "drawable", contesto.getPackageName());
+        //Drawable image = contesto.getResources().getDrawable(imgResource, null);
+        //holder.img.setImageDrawable(image);
 
 
        /* String  uri = cursor.getString(cursor.getColumnIndex(DbListManager.KEY_LIST_IMG));
