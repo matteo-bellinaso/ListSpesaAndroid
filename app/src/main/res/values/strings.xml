@@ -30,5 +30,6 @@
     <string name="alert_remove_list">Elimina Lista</string>
     <string name="alert_confim">Conferma</string>
     <string name="alert_undo">Annulla</string>
+    <string name="nascondi_completati_dettaglio">Nascondi Completati</string>
 
 </resources>

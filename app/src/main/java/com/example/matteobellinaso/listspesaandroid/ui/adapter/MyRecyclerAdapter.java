@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,18 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.CursorAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.matteobellinaso.listspesaandroid.R;
-import com.example.matteobellinaso.listspesaandroid.data.Item;
-import com.example.matteobellinaso.listspesaandroid.data.ItemList;
-import com.example.matteobellinaso.listspesaandroid.data.db.DbListManager;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseListManager;
+import com.example.matteobellinaso.listspesaandroid.logic.Utils;
+import com.example.matteobellinaso.listspesaandroid.ui.activity.DetailActivity;
 
 /**
  * Created by matteobellinaso on 09/04/18.
@@ -34,10 +28,11 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         private AdapterView.OnItemClickListener longListener;
         private LayoutInflater mInflater;
         private Cursor cursor;
-        private DbListManager dbListManager;
+        private DatabaseListManager databaseListManager;
         private Context contesto;
+        private int idToDetail;
 
-    public  class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView mTextView;
         private LinearLayout img;
@@ -54,22 +49,31 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         public void setOnItemClickCustom(Context context, final int position){
             context = root.getContext();
             final Context finalContext = context;
+
+            root.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intentDetail = new Intent(finalContext, DetailActivity.class);
+                    intentDetail.putExtra("listId", idToDetail);
+                    contesto.startActivity(intentDetail);
+                }
+            });
+
             root.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
 
-
                     AlertDialog.Builder builder = new AlertDialog.Builder(finalContext);
                     cursor.moveToPosition(position);
-                    dbListManager.open();
+                    databaseListManager.open();
 
                     builder.setTitle(R.string.alert_remove_list);
-                    builder.setMessage("vuoi eliminare la lista" + cursor.getString(cursor.getColumnIndex(dbListManager.KEY_LIST_NAME)) + "?");
+                    builder.setMessage("vuoi eliminare la lista" + cursor.getString(cursor.getColumnIndex(databaseListManager.KEY_LIST_NAME)) + "?");
 
                     builder.setPositiveButton((R.string.alert_confim), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            dbListManager.deleteList(position);
+                            databaseListManager.deleteList(cursor.getInt(cursor.getColumnIndex("_id")));
                             notifyItemRemoved(position);
                         }
                     });
@@ -89,14 +93,13 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         }
 
 
-
     }
 
     public MyRecyclerAdapter(Context context){
-        dbListManager = new DbListManager(context);
-        dbListManager.open();
+        databaseListManager = new DatabaseListManager(context);
+        databaseListManager.open();
         mInflater = LayoutInflater.from(context);
-        cursor = dbListManager.fetchAllList();
+        cursor = databaseListManager.fetchAllList();
         contesto = context;
     }
 
@@ -106,8 +109,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         View v = mInflater.inflate(R.layout.item_layout_list, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
 
-
-
         return viewHolder;
     }
 
@@ -116,12 +117,13 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
 
         cursor.moveToPosition(position);
 
-        String nameList = cursor.getString(cursor.getColumnIndex(dbListManager.KEY_LIST_NAME));
+        idToDetail = cursor.getInt(cursor.getColumnIndex("_id"));
+        String nameList = cursor.getString(cursor.getColumnIndex(databaseListManager.KEY_LIST_NAME));
         holder.mTextView.setText(nameList);
         holder.setOnItemClickCustom(contesto, position);
-        String img = cursor.getString(cursor.getColumnIndex(dbListManager.KEY_LIST_IMG));
+        String img = cursor.getString(cursor.getColumnIndex(databaseListManager.KEY_LIST_IMG));
 
-       /* String  uri = cursor.getString(cursor.getColumnIndex(DbListManager.KEY_LIST_IMG));
+       /* String  uri = cursor.getString(cursor.getColumnIndex(DatabaseListManager.KEY_LIST_CHECK));
         try{
             if(uri != null && uri.length() >0) {
                 int imgResource = contesto.getResources().getIdentifier(uri, "drawable", contesto.getPackageName());

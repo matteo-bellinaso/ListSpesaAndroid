@@ -5,13 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 /**
  * Created by matteobellinaso on 11/04/18.
  */
 
-public class DbListManager {
+public class DatabaseListManager {
 
 
     private SQLiteDatabase database;
@@ -25,11 +24,11 @@ public class DbListManager {
     public static final String KEY_LIST_USERID = "userId";
 
 
-    public DbListManager(Context context) {
+    public DatabaseListManager(Context context) {
         this.context = context;
     }
 
-    public DbListManager open() throws SQLException {
+    public DatabaseListManager open() throws SQLException {
         dbHelper = new DatabaseHelper(context);
         database = dbHelper.getWritableDatabase();
         return this;

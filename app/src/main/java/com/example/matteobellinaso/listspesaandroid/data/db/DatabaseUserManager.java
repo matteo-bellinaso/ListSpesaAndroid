@@ -20,9 +20,7 @@ public class DatabaseUserManager {
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_IMG = "img";
     public static final String KEY_TUTORIAL = "tutorial";
-    public static final String KEY_LIST_USERID= "userId";
-
-
+    public static final String KEY_LIST_USERID = "userId";
 
     public DatabaseUserManager(Context context) {
         this.context = context;
@@ -92,6 +90,10 @@ public class DatabaseUserManager {
     public Cursor selectUser(String email, String password){
         String[] columns = new String[]{KEY_TUTORIAL, KEY_USERID};
         return database.query(DATABASE_TABLE, columns,"email = '"+email+"' AND password = '"+password+"'",null,null,null,null);
+    }
+
+    public Cursor selectUserById(int id){
+        return database.query(DATABASE_TABLE, null,KEY_USERID + "=" + id,null,null,null,null);
     }
 
     public boolean updateTutorial(int id,int userId){
