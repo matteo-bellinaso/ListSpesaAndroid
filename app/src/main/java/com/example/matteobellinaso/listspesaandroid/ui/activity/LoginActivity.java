@@ -2,9 +2,7 @@ package com.example.matteobellinaso.listspesaandroid.ui.activity;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -52,20 +50,20 @@ public class LoginActivity extends AppCompatActivity {
         databaseUserManager = new DatabaseUserManager(this);
         databaseUserManager.open();
 
-        doLogin.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onClick(View view) {
-                if (emailValue.getText() != null && passwordValue.getText() != null ) {
-                    cursor = databaseUserManager.selectUser(String.valueOf(emailValue.getText()), String.valueOf(passwordValue.getText()));
-                    if (cursor != null && cursor.moveToFirst()) {
 
+            doLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (emailValue.getText() != null && passwordValue.getText() != null) {
+                        cursor = databaseUserManager.selectUser(String.valueOf(emailValue.getText()), String.valueOf(passwordValue.getText()));
+                        if(cursor!= null && cursor.moveToFirst()){
                         int id = cursor.getInt(cursor.getColumnIndex(DatabaseUserManager.KEY_USERID));
                         int result = cursor.getInt(cursor.getColumnIndex(DatabaseUserManager.KEY_TUTORIAL));
 
                         Calendar calendar = Calendar.getInstance();
                         Long timeStamp = calendar.getTimeInMillis();
                         Utils.writeOnSharedPreferences(timeStamp, id, getApplicationContext());
+
 
                         if (result == 1) {
                             databaseUserManager.close();

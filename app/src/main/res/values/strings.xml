@@ -26,4 +26,10 @@
     <string name="text_tutorial_second_2">Aggiorna la tua lista con gli articoli che vuoi acquistare</string>
     <string name="text_tutorial_third_1">Fai la spesa</string>
     <string name="text_tutorial_third_2">Fai la spesa e aggiorna la tua lista</string>
+
+    <string name="alert_remove_list">Elimina Lista</string>
+    <string name="alert_confim">Conferma</string>
+    <string name="alert_undo">Annulla</string>
+    <string name="nascondi_completati_dettaglio">Nascondi Completati</string>
+
 </resources>

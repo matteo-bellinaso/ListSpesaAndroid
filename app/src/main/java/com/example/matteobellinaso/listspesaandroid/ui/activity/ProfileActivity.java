@@ -19,6 +19,7 @@ public class ProfileActivity extends Activity {
     private DatabaseUserManager databaseUserManager;
     private Cursor cursor ;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +27,7 @@ public class ProfileActivity extends Activity {
 
         Intent profile = getIntent();
         int userId = profile.getIntExtra("userId",0);
+
 
         welcomUserProfile = (TextView)findViewById(R.id.welcomeUser);
         userProfile = (TextView)findViewById(R.id.username_profile);

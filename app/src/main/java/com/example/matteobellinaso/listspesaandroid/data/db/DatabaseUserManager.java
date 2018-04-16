@@ -20,9 +20,7 @@ public class DatabaseUserManager {
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_IMG = "img";
     public static final String KEY_TUTORIAL = "tutorial";
-    public static final String KEY_LIST_USERID= "userId";
-
-
+    public static final String KEY_LIST_USERID = "userId";
 
     public DatabaseUserManager(Context context) {
         this.context = context;
