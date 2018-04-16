@@ -13,7 +13,7 @@
         android:id="@+id/add_list_img"
         android:src="@drawable/camera_2"
         android:layout_marginBottom="@dimen/tutorial_img_margin"
-        android:background="@color/orange"
+        android:background="@color/yellow"
         />
 
     <EditText
