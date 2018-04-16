@@ -4,7 +4,8 @@
 
     <item
         android:id="@+id/userIcon"
-        android:title="user"
-        app:showAsAction="always"/>
+        app:showAsAction="always"
+        android:icon="@drawable/ic_profile"
+        android:title="" />
 
 </menu>

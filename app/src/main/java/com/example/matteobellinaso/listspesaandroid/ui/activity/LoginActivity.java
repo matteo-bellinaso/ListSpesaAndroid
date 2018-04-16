@@ -25,6 +25,12 @@ public class LoginActivity extends AppCompatActivity {
     private Calendar currentCalendar;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

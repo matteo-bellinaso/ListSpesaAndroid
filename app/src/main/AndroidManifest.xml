@@ -10,8 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+
         <activity android:name=".ui.activity.MainActivity"></activity>
-        <activity android:name=".ui.activity.LoginActivity">
+        <activity android:name=".ui.activity.LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -22,6 +24,7 @@
         <activity android:name=".ui.activity.TutorialActivity"></activity>
         <activity android:name=".ui.activity.ListActivity"></activity>
         <activity android:name=".ui.activity.ProfileActivity"></activity>
+
     </application>
 
 </manifest>
