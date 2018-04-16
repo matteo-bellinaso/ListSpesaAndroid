@@ -131,7 +131,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
 
         String imgString = cursor.getString(cursor.getColumnIndex(databaseListManager.KEY_LIST_IMG));
 
-
         String uri = cursor.getString(cursor.getColumnIndex(DatabaseListManager.KEY_LIST_IMG));
         try {
             if (uri != null && uri.length() > 0) {

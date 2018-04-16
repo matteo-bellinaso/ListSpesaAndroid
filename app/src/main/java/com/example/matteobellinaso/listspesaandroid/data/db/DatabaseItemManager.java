@@ -53,15 +53,15 @@ public class DatabaseItemManager {
         return database.insertOrThrow(DATABASE_TABLE, null, initialValues);
     }
     //delete a contact
-    public boolean deleteItem(long listId) {
-        return database.delete(DATABASE_TABLE, KEY_LIST_ID + "=" + listId, null) > 0;
+    public boolean deleteItem(int itemId) {
+        return database.delete(DATABASE_TABLE, KEY_LIST_ID + "=" + itemId, null) > 0;
     }
 
     public Cursor fetchFromId(int id) {
         return database.query(DATABASE_TABLE,null, KEY_LIST_LISTID +" = "+id, null, null, null,null);
     }
 
-    public boolean updateList(int id, int check) {
+    public boolean updateItem(int id, int check) {
         ContentValues updateValues = contentCheck(check);
         return database.update(DATABASE_TABLE, updateValues, KEY_LIST_ID + "=" + id, null) > 0;
     }

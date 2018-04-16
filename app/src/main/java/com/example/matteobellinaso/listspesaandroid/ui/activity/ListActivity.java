@@ -77,6 +77,12 @@ public class ListActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        databaseListManager.open();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.userIcon: {
@@ -98,7 +104,6 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
         databaseListManager = new DatabaseListManager(this);
-
         databaseListManager.open();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -130,7 +135,7 @@ public class ListActivity extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.dialog_custom, null);
         dialogBuilder.setView(dialogView);
         final EditText edit = (EditText) dialogView.findViewById(R.id.edit_add_list);
-         addImg = (ImageButton) dialogView.findViewById(R.id.add_list_img);
+        addImg = (ImageButton) dialogView.findViewById(R.id.add_list_img);
         dialogBuilder.setTitle(R.string.add_name_list);
 
 
@@ -140,22 +145,15 @@ public class ListActivity extends AppCompatActivity {
                 Intent photoPickerIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 photoPickerIntent.setType("image/*");
                 startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
-
-
-
             }
         });
 
         dialogBuilder.setPositiveButton(R.string.alert_confim, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                databaseListManager.createList(edit.getText().toString(), null, Utils.readId(getApplicationContext()));
-                mAdapter = new MyRecyclerAdapter(getApplicationContext());
-                databaseListManager.open();
                 databaseListManager.createList(edit.getText().toString(), pathImgList, Utils.readId(getApplicationContext()));
                 mAdapter = new MyRecyclerAdapter(ListActivity.this);
                 mRecyclerView.setAdapter(mAdapter);
                 pathImgList = null;
-                databaseListManager.close();
             }
         });
 
@@ -165,7 +163,6 @@ public class ListActivity extends AppCompatActivity {
                 dialog.cancel();
             }
         });
-        mRecyclerView.setAdapter(mAdapter);
         dialogBuilder.show();
     }
 

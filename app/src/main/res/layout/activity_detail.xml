@@ -26,6 +26,23 @@
     <ListView
         android:id="@+id/listViewDetail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+    </ListView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floating_button"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="50dp"
+        android:paddingRight="40dp"
+        android:src="@drawable/plus"
+        android:backgroundTint="@color/yellow"
+        />
+
+
 
 </LinearLayout>
