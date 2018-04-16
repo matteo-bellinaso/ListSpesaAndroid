@@ -18,8 +18,8 @@ public class MyCursorAdapter extends CursorAdapter {
     private DatabaseHelper dbHelper;
     private DatabaseItemManager databaseItemManager;
 
-    public MyCursorAdapter(Context context, Cursor c) {
-        super(context, c,0);
+    public MyCursorAdapter(Context context, Cursor cursor) {
+        super(context, cursor,0);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class MyCursorAdapter extends CursorAdapter {
         ImageView check = (ImageView) view.findViewById(R.id.imgCheck);
 
         name.setText(cursor.getString(cursor.getColumnIndex("name")));
-        if(cursor.getInt(cursor.getColumnIndex("check")) == 1){
+        if(cursor.getInt(cursor.getColumnIndex("checked")) == 1){
             check.setVisibility(View.VISIBLE);
         }
     }

@@ -64,13 +64,13 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        databaseItemManager = new DatabaseItemManager(this);
+        /*databaseItemManager = new DatabaseItemManager(this);
         databaseItemManager.open();
-        databaseItemManager.createItem("zola",0,6);
-        databaseItemManager.close();
-
+        databaseItemManager.createItem("zoleno",0,1);
+        databaseItemManager.close();*/
 
         databaseListManager = new DatabaseListManager(this);
+
         databaseListManager.open();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -85,6 +85,7 @@ public class ListActivity extends AppCompatActivity {
         FloatingActionButton buttons =(FloatingActionButton) findViewById(R.id.floating_button);
 
         mRecyclerView.setAdapter(mAdapter);
+        databaseListManager.close();
     }
 
 

@@ -41,6 +41,12 @@ public class DatabaseItemManager {
         return values;
     }
 
+    private ContentValues contentCheck(int check) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_LIST_CHECK, check);
+        return values;
+    }
+
     //create a contact
     public long createItem( String name, int check, int listId ) {
         ContentValues initialValues = createContentItemValues(name, check, listId) ;
@@ -53,5 +59,10 @@ public class DatabaseItemManager {
 
     public Cursor fetchFromId(int id) {
         return database.query(DATABASE_TABLE,null, KEY_LIST_LISTID +" = "+id, null, null, null,null);
+    }
+
+    public boolean updateList(int id, int check) {
+        ContentValues updateValues = contentCheck(check);
+        return database.update(DATABASE_TABLE, updateValues, KEY_LIST_ID + "=" + id, null) > 0;
     }
 }

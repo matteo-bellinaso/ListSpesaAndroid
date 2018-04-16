@@ -30,7 +30,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         private Cursor cursor;
         private DatabaseListManager databaseListManager;
         private Context contesto;
-        private int idToDetail;
+        protected int idToDetail;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -54,6 +54,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
                 @Override
                 public void onClick(View view) {
                     Intent intentDetail = new Intent(finalContext, DetailActivity.class);
+                    Log.d("ints",""+idToDetail);
                     intentDetail.putExtra("listId", idToDetail);
                     contesto.startActivity(intentDetail);
                 }
