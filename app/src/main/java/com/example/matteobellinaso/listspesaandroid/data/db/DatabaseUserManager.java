@@ -46,9 +46,9 @@ public class DatabaseUserManager {
         return values;
     }
 
-    private ContentValues tutorialValue(int id){
+    private ContentValues tutorialValue(int tutorial){
         ContentValues value = new ContentValues();
-        value.put(KEY_TUTORIAL,id);
+        value.put(KEY_TUTORIAL,tutorial);
         return value;
     }
 
@@ -96,8 +96,8 @@ public class DatabaseUserManager {
         return database.query(DATABASE_TABLE, null,KEY_USERID + "=" + id,null,null,null,null);
     }
 
-    public boolean updateTutorial(int id,int userId){
-        ContentValues tutoVal = tutorialValue(id);
+    public boolean updateTutorial(int tutorialValue,int userId){
+        ContentValues tutoVal = tutorialValue(tutorialValue);
         return database.update(DATABASE_TABLE, tutoVal, KEY_USERID + "=" + userId, null) > 0;
     }
 }

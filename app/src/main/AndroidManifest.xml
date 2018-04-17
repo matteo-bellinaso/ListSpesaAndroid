@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.matteobellinaso.listspesaandroid">
 
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE">
-</uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
 
     <application
         android:allowBackup="true"

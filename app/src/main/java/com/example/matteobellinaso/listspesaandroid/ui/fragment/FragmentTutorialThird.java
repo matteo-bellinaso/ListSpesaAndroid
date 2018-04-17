@@ -58,6 +58,8 @@ public class FragmentTutorialThird extends Fragment {
         });
 
 
+        dbManager.close();
+
         return view;
     }
 }

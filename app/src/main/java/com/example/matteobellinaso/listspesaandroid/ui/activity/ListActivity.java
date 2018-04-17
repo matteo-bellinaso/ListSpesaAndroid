@@ -56,7 +56,7 @@ public class ListActivity extends AppCompatActivity {
 
     private static int RESULT_LOAD_IMG = 1;
 
-    private  String pathImgList ;
+    private String pathImgList;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -70,16 +70,16 @@ public class ListActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        databaseListManager.open();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         return true;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        databaseListManager.open();
     }
 
     @Override
