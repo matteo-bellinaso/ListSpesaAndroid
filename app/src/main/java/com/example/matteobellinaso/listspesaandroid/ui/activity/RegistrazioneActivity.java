@@ -7,17 +7,21 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.util.Base64;
 
 import com.example.matteobellinaso.listspesaandroid.R;
 import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseUserManager;
+import com.example.matteobellinaso.listspesaandroid.logic.Utils;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Calendar;
 
 public class RegistrazioneActivity extends Activity {
 
@@ -66,8 +70,15 @@ public class RegistrazioneActivity extends Activity {
                 usernameText = username.getText().toString();
                 emailText = email.getText().toString();
                 passwordText = password.getText().toString();
+                String encodedPassword = Base64.encodeToString(passwordText.getBytes(), Base64.DEFAULT);
+                Log.d("encode","encoded psw "+encodedPassword);
 
-                databaseUserManager.createUser(emailText,usernameText,passwordText,pathImmagine,1);
+                databaseUserManager.createUser(emailText,usernameText,encodedPassword,pathImmagine,1);
+                Cursor getId = databaseUserManager.selectUser(emailText,encodedPassword);
+                getId.moveToFirst();
+                Calendar calendar = Calendar.getInstance();
+                Long timeStamp = calendar.getTimeInMillis();
+                Utils.writeOnSharedPreferences(timeStamp, getId.getInt(getId.getColumnIndex("_id")), getApplicationContext());
                 databaseUserManager.close();
 
                 Intent tutorialIntent = new Intent(getApplicationContext(), TutorialActivity.class);

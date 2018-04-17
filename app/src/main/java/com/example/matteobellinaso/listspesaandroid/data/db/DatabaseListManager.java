@@ -64,4 +64,8 @@ public class DatabaseListManager {
         return database.query(DATABASE_TABLE,null, null, null, null, null,null);
     }
 
+    public Cursor fetchListByUser(int userId) {
+        return database.query(DATABASE_TABLE,null, KEY_LIST_USERID + " = " + userId, null, null, null,null);
+    }
+
 }

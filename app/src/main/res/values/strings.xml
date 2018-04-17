@@ -34,5 +34,6 @@
 
     <string name="add_name_list">Nome della lista</string>
     <string name="add_desc_list">Descrizione</string>
+    <string name="logout">Logout</string>
 
 </resources>

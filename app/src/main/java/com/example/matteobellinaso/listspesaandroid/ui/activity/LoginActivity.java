@@ -10,8 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Base64;
 
 import com.example.matteobellinaso.listspesaandroid.R;
+import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseHelper;
 import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseUserManager;
 import com.example.matteobellinaso.listspesaandroid.logic.Utils;
 
@@ -20,6 +22,7 @@ import java.util.Calendar;
 public class LoginActivity extends AppCompatActivity {
 
     private DatabaseUserManager databaseUserManager;
+    private DatabaseHelper dbHelper;
     private Cursor cursor;
     private Calendar calendar;
     private Calendar currentCalendar;
@@ -35,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
             calendar.setTimeInMillis(Utils.readTimestamp(this));
             String token = Utils.convertDate(String.valueOf(Utils.readTimestamp(this)), "dd");
             String current = Utils.convertDate(String.valueOf(currentCalendar.getTimeInMillis()), "dd");
-            Log.d("token", "token: " + token + " - " + "current " + current);
             if (token.equals(current)) {
                 Intent listIntent = new Intent(this, ListActivity.class);
                 startActivity(listIntent);
@@ -55,7 +57,8 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     if (emailValue.getText() != null && passwordValue.getText() != null) {
-                        cursor = databaseUserManager.selectUser(String.valueOf(emailValue.getText()), String.valueOf(passwordValue.getText()));
+                        String encodedPassword = Base64.encodeToString(String.valueOf(passwordValue.getText()).getBytes(), Base64.DEFAULT);
+                        cursor = databaseUserManager.selectUser(String.valueOf(emailValue.getText()), encodedPassword);
                         if(cursor!= null && cursor.moveToFirst()){
                         int id = cursor.getInt(cursor.getColumnIndex(DatabaseUserManager.KEY_USERID));
                         int result = cursor.getInt(cursor.getColumnIndex(DatabaseUserManager.KEY_TUTORIAL));
@@ -66,14 +69,13 @@ public class LoginActivity extends AppCompatActivity {
 
 
                         if (result == 1) {
-                            databaseUserManager.close();
                             Intent tutorialIntent = new Intent(getApplicationContext(), TutorialActivity.class);
                             startActivity(tutorialIntent);
                         } else {
-                            databaseUserManager.close();
                             Intent listIntent = new Intent(getApplicationContext(), ListActivity.class);
                             startActivity(listIntent);
                         }
+
                     } else {
                         Toast.makeText(getApplicationContext(), "Utente Non Trovato", Toast.LENGTH_LONG).show();
                     }
@@ -91,5 +93,16 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        databaseUserManager.close();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        databaseUserManager.close();
+    }
 }

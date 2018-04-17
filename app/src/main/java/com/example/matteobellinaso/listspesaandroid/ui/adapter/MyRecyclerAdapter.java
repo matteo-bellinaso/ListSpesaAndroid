@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.matteobellinaso.listspesaandroid.R;
 import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseListManager;
+import com.example.matteobellinaso.listspesaandroid.logic.Utils;
 import com.example.matteobellinaso.listspesaandroid.ui.activity.DetailActivity;
 
 /**
@@ -55,7 +56,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
                 @Override
                 public void onClick(View view) {
                     Intent intentDetail = new Intent(contesto, DetailActivity.class);
-                    Log.d("iddetail",""+idToDetail[position]+" - "+ position);
                     intentDetail.putExtra("listId", idToDetail[position]);
                     contesto.startActivity(intentDetail);
                 }
@@ -99,7 +99,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
             cursor.close();
         }
 
-        cursor = databaseListManager.fetchAllList();
+        cursor = databaseListManager.fetchListByUser(Utils.readId(contesto));
         notifyDataSetChanged();
     }
 
@@ -107,7 +107,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         databaseListManager = new DatabaseListManager(context);
         databaseListManager.open();
         mInflater = LayoutInflater.from(context);
-        cursor = databaseListManager.fetchAllList();
+        cursor = databaseListManager.fetchListByUser(Utils.readId(context));
         contesto = context;
         idToDetail = new int[cursor.getCount()];
     }

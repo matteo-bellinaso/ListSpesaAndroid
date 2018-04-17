@@ -150,7 +150,7 @@ public class ListActivity extends AppCompatActivity {
 
         dialogBuilder.setPositiveButton(R.string.alert_confim, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                databaseListManager.createList(edit.getText().toString(), pathImgList, Utils.readId(getApplicationContext()));
+                databaseListManager.createList(edit.getText().toString(), pathImgList, Utils.readId(ListActivity.this));
                 mAdapter = new MyRecyclerAdapter(ListActivity.this);
                 mRecyclerView.setAdapter(mAdapter);
                 pathImgList = null;
