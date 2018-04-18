@@ -8,6 +8,7 @@
     <TextView
         android:text="@string/text_tutorial_third_1"
         style="@style/tutorial_title"
+        android:layout_marginTop="45dp"
         />
 
     <TextView
