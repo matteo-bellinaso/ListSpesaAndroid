@@ -29,7 +29,7 @@
     <string name="alert_confim">Conferma</string>
     <string name="alert_undo">Annulla</string>
 
-    <string name="add_name_list">Nome della lista</string>
+    <string name="add_name_list">Nome lista: </string>
     <string name="add_desc_list">Descrizione</string>
-
+    <string name="dialog_title">Aggiungi lista</string>
 </resources>

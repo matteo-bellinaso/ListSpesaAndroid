@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.matteobellinaso.listspesaandroid.R;
@@ -34,6 +35,8 @@ import com.example.matteobellinaso.listspesaandroid.data.ItemList;
 import com.example.matteobellinaso.listspesaandroid.data.db.DbListManager;
 import com.example.matteobellinaso.listspesaandroid.logic.Utils;
 import com.example.matteobellinaso.listspesaandroid.ui.adapter.MyRecyclerAdapter;
+
+import org.w3c.dom.Text;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -51,12 +54,12 @@ public class ListActivity extends AppCompatActivity {
     private static int RESULT_LOAD_IMG = 1;
 
     private  String pathImgList ;
-
+    private TextView nlist;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private DbListManager dbListManager;
-    private Context mContext;
+
 
     @Override
     public void onBackPressed() {
@@ -68,6 +71,7 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+
         dbListManager = new DbListManager(this);
         dbListManager.open();
 
@@ -76,13 +80,14 @@ public class ListActivity extends AppCompatActivity {
 
         mAdapter = new MyRecyclerAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
-
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
 
+        nlist = (TextView) findViewById(R.id.n_list);
         FloatingActionButton buttons =(FloatingActionButton) findViewById(R.id.floating_button);
 
+        nlist.setText("Elenco liste (" + mAdapter.getItemCount() + ")");
         buttons.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +97,6 @@ public class ListActivity extends AppCompatActivity {
         dbListManager.close();
     }
 
-
     public void addListDialog(){
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
@@ -101,7 +105,7 @@ public class ListActivity extends AppCompatActivity {
         dialogBuilder.setView(dialogView);
         final EditText edit = (EditText) dialogView.findViewById(R.id.edit_add_list);
          addImg = (ImageButton) dialogView.findViewById(R.id.add_list_img);
-        dialogBuilder.setTitle(R.string.add_name_list);
+        dialogBuilder.setTitle(R.string.dialog_title);
 
         addImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,9 +113,6 @@ public class ListActivity extends AppCompatActivity {
                 Intent photoPickerIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 photoPickerIntent.setType("image/*");
                 startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
-
-
-
             }
         });
 
@@ -125,18 +126,14 @@ public class ListActivity extends AppCompatActivity {
                 dbListManager.close();
             }
         });
-
         dialogBuilder.setNegativeButton(R.string.alert_undo, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
         });
-
         dialogBuilder.show();
     }
-
-
 
 
     @Override
@@ -151,7 +148,6 @@ public class ListActivity extends AppCompatActivity {
                 addImg.setImageBitmap(selectedImage);
 
                 pathImgList = getStringFromUri(imageUri);
-
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -169,6 +165,7 @@ public class ListActivity extends AppCompatActivity {
         stringUri = uri.toString();
         return stringUri;
     }
+
 
 
 }

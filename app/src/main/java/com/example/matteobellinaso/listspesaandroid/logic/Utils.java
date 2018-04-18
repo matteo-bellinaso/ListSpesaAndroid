@@ -9,6 +9,7 @@ public class Utils {
     private static final String TIMESTAMP = "timestamp";
     private static final String TIMESTAMP_VALUE = "timestamp_value";
     private static final String USERNAME_VALUE = "username_value";
+    private static int NLIST = 0;
 
     public static void writeOnSharedPreferences(Long timestamp, Context context){
         SharedPreferences sharedPref = context.getSharedPreferences(TIMESTAMP,Context.MODE_PRIVATE);
@@ -30,5 +31,10 @@ public class Utils {
         SharedPreferences sharedPref = context.getSharedPreferences(TIMESTAMP,Context.MODE_PRIVATE);
         return sharedPref.getInt(USERNAME_VALUE,0);
     }
+
+    public static void setNList(int nlist){
+        NLIST = nlist;
+    }
+
 
 }

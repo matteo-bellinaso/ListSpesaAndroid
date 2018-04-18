@@ -35,6 +35,7 @@ import static com.example.matteobellinaso.listspesaandroid.R.id.list_background;
 
 public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder>  {
 
+
         private AdapterView.OnItemClickListener longListener;
         private LayoutInflater mInflater;
         private Cursor cursor;
@@ -97,6 +98,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         }
         cursor = dbListManager.fetchAllList();
         notifyDataSetChanged();
+
     }
 
     public MyRecyclerAdapter(Context context){

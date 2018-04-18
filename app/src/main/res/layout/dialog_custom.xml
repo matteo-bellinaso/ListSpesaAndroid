@@ -6,6 +6,7 @@
     android:padding="15dp"
     android:orientation="vertical">
 
+
     <ImageButton
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -16,6 +17,12 @@
         android:background="@color/yellow"
         />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/tutorial_text_description"
+            android:padding="10dp"
+            android:text="@string/add_name_list"/>
     <EditText
         android:id="@+id/edit_add_list"
         android:layout_width="match_parent"
