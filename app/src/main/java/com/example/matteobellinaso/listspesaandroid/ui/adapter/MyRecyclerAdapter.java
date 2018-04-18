@@ -22,7 +22,9 @@ import android.widget.TextView;
 import com.example.matteobellinaso.listspesaandroid.R;
 import com.example.matteobellinaso.listspesaandroid.data.Item;
 import com.example.matteobellinaso.listspesaandroid.data.ItemList;
-import com.example.matteobellinaso.listspesaandroid.data.db.DbListManager;
+import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseListManager;
+import com.example.matteobellinaso.listspesaandroid.logic.Utils;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +41,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         private AdapterView.OnItemClickListener longListener;
         private LayoutInflater mInflater;
         private Cursor cursor;
-        private DbListManager dbListManager;
+        private DatabaseListManager dbListManager;
         private Context contesto;
 
     public  class ViewHolder extends RecyclerView.ViewHolder {
@@ -74,7 +76,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
                     builder.setPositiveButton((R.string.alert_confim), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            dbListManager.deleteList(cursor.getInt(cursor.getColumnIndex(DbListManager.KEY_LIST_ID)));
+                            dbListManager.deleteList(cursor.getInt(cursor.getColumnIndex(dbListManager.KEY_LIST_ID)));
                             swapCursor();
                         }
                     });
@@ -96,16 +98,16 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         if(cursor != null && !cursor.isClosed()){
             cursor.close();
         }
-        cursor = dbListManager.fetchAllList();
+        cursor = dbListManager.fetchListByUser(Utils.readId(contesto));
         notifyDataSetChanged();
 
     }
 
     public MyRecyclerAdapter(Context context){
-        dbListManager = new DbListManager(context);
+        dbListManager = new DatabaseListManager(context);
         dbListManager.open();
         mInflater = LayoutInflater.from(context);
-        cursor = dbListManager.fetchAllList();
+        cursor = dbListManager.fetchListByUser(Utils.readId(context));
         contesto = context;
     }
 
@@ -127,7 +129,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         holder.mTextView.setText(nameList);
         holder.setOnItemClickCustom(contesto, position);
 
-        String  uri = cursor.getString(cursor.getColumnIndex(DbListManager.KEY_LIST_IMG));
+        String  uri = cursor.getString(cursor.getColumnIndex(dbListManager.KEY_LIST_IMG));
         try{
             if(uri != null && uri.length() > 0) {
                 holder.img.setImageURI(getUriFromString(uri));

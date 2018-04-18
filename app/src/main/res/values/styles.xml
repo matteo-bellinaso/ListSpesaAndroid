@@ -24,6 +24,11 @@
         <item name="android:textColor">@color/bottone</item>
     </style>
 
+    <style name="font_profile">
+        <item name="android:textSize">20dp</item>
+        <item name="android:textColor">@color/font</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
 
     <style name="tutorial_title">

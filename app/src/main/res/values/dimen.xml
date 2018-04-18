@@ -4,6 +4,7 @@
     <dimen name="registrati_img_profilo">170dp</dimen>
     <dimen name="registrati_fontsize">20dp</dimen>
     <dimen name="registrati_fontsize_form">16dp</dimen>
+    <dimen name="img_profilo">130dp</dimen>
 
     <dimen name="loginTitleMargin">40dp</dimen>
     <dimen name="loginTitleSize">25sp</dimen>

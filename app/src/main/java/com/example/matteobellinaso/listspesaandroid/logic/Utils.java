@@ -9,14 +9,20 @@ public class Utils {
     private static final String TIMESTAMP = "timestamp";
     private static final String TIMESTAMP_VALUE = "timestamp_value";
     private static final String USERNAME_VALUE = "username_value";
-    private static int NLIST = 0;
 
-    public static void writeOnSharedPreferences(Long timestamp, Context context){
+    public static void writeOnSharedPreferences(Long timestamp, int id, Context context){
         SharedPreferences sharedPref = context.getSharedPreferences(TIMESTAMP,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putLong(TIMESTAMP_VALUE,timestamp);
+        editor.putInt(USERNAME_VALUE,id);
         editor.commit();
     }
+
+    public static Long readTimestamp(Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences(TIMESTAMP,Context.MODE_PRIVATE);
+        return sharedPref.getLong(TIMESTAMP_VALUE,0);
+    }
+
 
     public static Long readOnSharedPreferences(Context context){
         SharedPreferences sharedPref = context.getSharedPreferences(TIMESTAMP,Context.MODE_PRIVATE);
@@ -32,9 +38,8 @@ public class Utils {
         return sharedPref.getInt(USERNAME_VALUE,0);
     }
 
-    public static void setNList(int nlist){
-        NLIST = nlist;
+    public static boolean deleteSharedPreferences(Context context){
+        return context.deleteSharedPreferences(TIMESTAMP);
     }
-
 
 }

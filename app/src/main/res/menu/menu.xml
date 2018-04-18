@@ -5,6 +5,8 @@
     <item
         android:id="@+id/userIcon"
         android:title="user"
+        android:icon="@drawable/user"
         app:showAsAction="always"/>
+
 
 </menu>
