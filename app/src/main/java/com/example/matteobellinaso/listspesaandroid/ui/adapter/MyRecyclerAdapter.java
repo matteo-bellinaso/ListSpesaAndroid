@@ -55,9 +55,15 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
             root.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    cursor.moveToPosition(position);
+                    databaseListManager.open();
+
                     Intent intentDetail = new Intent(contesto, DetailActivity.class);
                     intentDetail.putExtra("listId", idToDetail[position]);
+                    intentDetail.putExtra("listName", cursor.getString(cursor.getColumnIndex(databaseListManager.KEY_LIST_NAME)));
                     contesto.startActivity(intentDetail);
+                    databaseListManager.close();
                 }
             });
 
@@ -87,6 +93,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
                         }
                     });
                     builder.show();
+                    databaseListManager.close();
                     return true;
                 }
             });

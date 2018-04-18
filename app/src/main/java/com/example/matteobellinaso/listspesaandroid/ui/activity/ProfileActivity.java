@@ -17,7 +17,7 @@ import com.example.matteobellinaso.listspesaandroid.R;
 import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseUserManager;
 import com.example.matteobellinaso.listspesaandroid.logic.Utils;
 
-public class ProfileActivity extends Activity {
+public class ProfileActivity extends AppCompatActivity {
 
     private TextView welcomUserProfile;
     private TextView userProfile;
@@ -28,11 +28,19 @@ public class ProfileActivity extends Activity {
     private DatabaseUserManager databaseUserManager;
     private Cursor cursor ;
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Intent profile = getIntent();
         int userId = profile.getIntExtra("userId",0);

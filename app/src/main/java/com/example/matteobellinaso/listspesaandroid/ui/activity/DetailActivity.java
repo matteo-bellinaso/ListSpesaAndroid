@@ -29,15 +29,28 @@ public class DetailActivity extends AppCompatActivity {
     private MyCursorAdapter mAdapter;
     private ListView listView;
     private int listId;
+    private String listName;
     private AlertDialog.Builder builder;
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         final Intent getDetail = getIntent();
         listId = getDetail.getIntExtra("listId", 0);
+        listName = getDetail.getStringExtra("listName");
+
+        getSupportActionBar().setTitle(listName);
 
         databaseItemManager = new DatabaseItemManager(this);
         databaseItemManager.open();
@@ -91,7 +104,7 @@ public class DetailActivity extends AppCompatActivity {
 
                 builder = new AlertDialog.Builder(DetailActivity.this);
                 builder.setTitle(R.string.alert_remove_list);
-                builder.setMessage("Vuoi eliminare il prodotto " + cursor.getString(currentCursor.getColumnIndex("name")) + "?");
+                builder.setMessage("Vuoi eliminare il prodotto " + currentCursor.getString(currentCursor.getColumnIndex("name")) + "?");
 
                 builder.setPositiveButton((R.string.alert_confim), new DialogInterface.OnClickListener() {
                     @Override
@@ -132,7 +145,7 @@ public class DetailActivity extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.dialog_custom, null);
         dialogBuilder.setView(dialogView);
         final EditText edit = (EditText) dialogView.findViewById(R.id.edit_add_list);
-        dialogBuilder.setTitle(R.string.add_name_list);
+        dialogBuilder.setTitle(R.string.add_name_product);
 
         dialogBuilder.setPositiveButton(R.string.alert_confim, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
