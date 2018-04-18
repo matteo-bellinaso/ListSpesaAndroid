@@ -1,5 +1,6 @@
 package com.example.matteobellinaso.listspesaandroid.ui.activity;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,8 +19,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.matteobellinaso.listspesaandroid.R;
+import com.example.matteobellinaso.listspesaandroid.data.Item;
 import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseItemManager;
 import com.example.matteobellinaso.listspesaandroid.ui.adapter.MyCursorAdapter;
 
@@ -99,7 +102,7 @@ public class DetailActivity extends AppCompatActivity {
 
                 builder = new AlertDialog.Builder(DetailActivity.this);
                 builder.setTitle(R.string.alert_remove_list);
-                builder.setMessage("Vuoi eliminare il prodotto " + cursor.getString(currentCursor.getColumnIndex("name")) + "?");
+                builder.setMessage("Vuoi eliminare il prodotto " + currentCursor.getString(currentCursor.getColumnIndex("name")) + "?");
 
                 builder.setPositiveButton((R.string.alert_confim), new DialogInterface.OnClickListener() {
                     @Override
@@ -137,7 +140,7 @@ public class DetailActivity extends AppCompatActivity {
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
 
-        View dialogView = inflater.inflate(R.layout.dialog_custom, null);
+        final View dialogView = inflater.inflate(R.layout.dialog_custom, null);
         ImageButton imgButt = dialogView.findViewById(R.id.add_list_img);
         imgButt.setVisibility(View.GONE);
         dialogBuilder.setView(dialogView);
@@ -146,9 +149,19 @@ public class DetailActivity extends AppCompatActivity {
 
         dialogBuilder.setPositiveButton(R.string.alert_confim, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                databaseItemManager.createItem(edit.getText().toString(), 0, listId);
-                mAdapter.swapCursor(databaseItemManager.fetchFromId(listId));
-                listView.setAdapter(mAdapter);
+
+                if (controlExist(edit.getText().toString()) == true) {
+
+                    Toast toast = Toast.makeText(DetailActivity.this, "prodotto " + edit.getText().toString() + " già esistente", Toast.LENGTH_LONG);
+                    toast.show();
+                    dialog.dismiss();
+                } else {
+                    databaseItemManager.createItem(edit.getText().toString(), 0, listId);
+                    mAdapter.swapCursor(databaseItemManager.fetchFromId(listId));
+                    listView.setAdapter(mAdapter);
+                    dialog.dismiss();
+                }
+
             }
         });
 
@@ -165,5 +178,19 @@ public class DetailActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         databaseItemManager.close();
+    }
+
+
+    public boolean controlExist(String compare) {
+        Cursor cursor = databaseItemManager.fetchFromId(listId);
+
+        while(cursor.moveToNext()) {
+            String name = cursor.getString(cursor.getColumnIndex("name"));
+            if (compare.toLowerCase().equals(name.toLowerCase()) == true) {
+
+                return true;
+            }
+        }
+        return false;
     }
 }

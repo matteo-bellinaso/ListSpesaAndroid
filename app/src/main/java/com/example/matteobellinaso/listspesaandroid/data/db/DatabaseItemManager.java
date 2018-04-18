@@ -53,8 +53,8 @@ public class DatabaseItemManager {
         return database.insertOrThrow(DATABASE_TABLE, null, initialValues);
     }
     //delete a contact
-    public boolean deleteItem(int itemId) {
-        return database.delete(DATABASE_TABLE, KEY_LIST_ID + "=" + itemId, null) > 0;
+    public boolean deleteItem(int id) {
+        return database.delete(DATABASE_TABLE, KEY_LIST_ID + "=" + id, null) > 0;
     }
 
     public Cursor fetchFromId(int id) {

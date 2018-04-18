@@ -30,7 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String KEY_ITEM_LISTID = "listId";
 
     private static final String DB_ITEM_CREATE=
-            "CREATE TABLE items (_id integer primary key autoincrement ,"+KEY_ITEM_NAME+" text,"+KEY_ITEM_CHECK+" integer, "+KEY_ITEM_LISTID+" integer);";
+            "CREATE TABLE items (_id integer primary key autoincrement, "+KEY_ITEM_NAME+" text,"+KEY_ITEM_CHECK+" integer, "+KEY_ITEM_LISTID+" integer);";
 
     // Costruttore
     public DatabaseHelper(Context context) {

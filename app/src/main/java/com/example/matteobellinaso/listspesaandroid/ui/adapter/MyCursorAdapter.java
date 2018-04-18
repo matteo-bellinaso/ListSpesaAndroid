@@ -37,6 +37,7 @@ public class MyCursorAdapter extends CursorAdapter {
         final ImageView check = (ImageView) view.findViewById(R.id.imgCheck);
 
         name.setText(cursor.getString(cursor.getColumnIndex("name")));
+
         if (cursor.getInt(cursor.getColumnIndex("checked")) == 1) {
             check.setVisibility(View.VISIBLE);
         }
