@@ -1,5 +1,6 @@
 package com.example.matteobellinaso.listspesaandroid.ui.activity;
 
+import android.content.Intent;
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,27 +16,28 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.matteobellinaso.listspesaandroid.R;
+import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseHelper;
+import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseItemManager;
+import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseListManager;
+import com.example.matteobellinaso.listspesaandroid.logic.Utils;
 import com.example.matteobellinaso.listspesaandroid.data.Item;
 import com.example.matteobellinaso.listspesaandroid.data.ItemList;
-import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseListManager;
 import com.example.matteobellinaso.listspesaandroid.logic.Utils;
 import com.example.matteobellinaso.listspesaandroid.ui.adapter.MyRecyclerAdapter;
 
@@ -52,18 +54,15 @@ public class ListActivity extends AppCompatActivity {
 
     private ImageButton addImg;
 
-    public final static String EXTRA_LIST_ID = "userId";
-
     private static int RESULT_LOAD_IMG = 1;
 
-    private  String pathImgList ;
+    private String pathImgList;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private DatabaseListManager dbListManager;
+    private DatabaseListManager databaseListManager;
     private Context mContext;
-    private TextView nlist;
 
     @Override
     public void onBackPressed() {
@@ -73,7 +72,7 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        dbListManager.open();
+        databaseListManager.open();
     }
 
     @Override
@@ -104,8 +103,8 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        dbListManager = new DatabaseListManager(this);
-        dbListManager.open();
+        databaseListManager = new DatabaseListManager(this);
+        databaseListManager.open();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -117,17 +116,15 @@ public class ListActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
 
-        nlist = (TextView) findViewById(R.id.n_list);
         FloatingActionButton buttons =(FloatingActionButton) findViewById(R.id.floating_button);
 
-        getNumberList();
         buttons.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                     addListDialog();
             }
         });
-        dbListManager.close();
+        databaseListManager.close();
     }
 
 
@@ -138,8 +135,9 @@ public class ListActivity extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.dialog_custom, null);
         dialogBuilder.setView(dialogView);
         final EditText edit = (EditText) dialogView.findViewById(R.id.edit_add_list);
-         addImg = (ImageButton) dialogView.findViewById(R.id.add_list_img);
+        addImg = (ImageButton) dialogView.findViewById(R.id.add_list_img);
         dialogBuilder.setTitle(R.string.add_name_list);
+
 
         addImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,14 +150,10 @@ public class ListActivity extends AppCompatActivity {
 
         dialogBuilder.setPositiveButton(R.string.alert_confim, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                dbListManager.open();
-                dbListManager.createList(edit.getText().toString(), pathImgList, Utils.readId(getApplicationContext()));
-                Cursor idCursor = dbListManager.fetchLastList(Utils.readId(ListActivity.this));
-                idCursor.moveToFirst();
-                Intent intent = new Intent(ListActivity.this,DetailActivity.class);
-                intent.putExtra(EXTRA_LIST_ID, idCursor.getInt(idCursor.getColumnIndex("_id")));
-                startActivity(intent);
-                dbListManager.close();
+                databaseListManager.createList(edit.getText().toString(), pathImgList, Utils.readId(ListActivity.this));
+                mAdapter = new MyRecyclerAdapter(ListActivity.this);
+                mRecyclerView.setAdapter(mAdapter);
+                pathImgList = null;
             }
         });
 
@@ -169,14 +163,13 @@ public class ListActivity extends AppCompatActivity {
                 dialog.cancel();
             }
         });
-
         dialogBuilder.show();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        dbListManager.close();
+        databaseListManager.close();
     }
 
 
@@ -212,10 +205,6 @@ public class ListActivity extends AppCompatActivity {
         return stringUri;
     }
 
-    public void getNumberList(){
-         Cursor cursoe = dbListManager.fetchListByUser(Utils.readId(getApplicationContext()));
-        nlist.setText("Elenco liste (" + cursoe.getCount() + ")");
-    }
-
 
 }
+

@@ -23,16 +23,6 @@ public class Utils {
         return sharedPref.getLong(TIMESTAMP_VALUE,0);
     }
 
-
-    public static Long readOnSharedPreferences(Context context){
-        SharedPreferences sharedPref = context.getSharedPreferences(TIMESTAMP,Context.MODE_PRIVATE);
-        return sharedPref.getLong(TIMESTAMP_VALUE,0);
-    }
-
-    public static String convertDate(String dateInMilliseconds,String dateFormat) {
-        return DateFormat.format(dateFormat, Long.parseLong(dateInMilliseconds)).toString();
-    }
-
     public static int readId(Context context){
         SharedPreferences sharedPref = context.getSharedPreferences(TIMESTAMP,Context.MODE_PRIVATE);
         return sharedPref.getInt(USERNAME_VALUE,0);
@@ -40,6 +30,10 @@ public class Utils {
 
     public static boolean deleteSharedPreferences(Context context){
         return context.deleteSharedPreferences(TIMESTAMP);
+    }
+
+    public static String convertDate(String dateInMilliseconds,String dateFormat) {
+        return DateFormat.format(dateFormat, Long.parseLong(dateInMilliseconds)).toString();
     }
 
 }

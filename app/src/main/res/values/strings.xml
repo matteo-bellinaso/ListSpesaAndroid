@@ -32,9 +32,8 @@
     <string name="alert_undo">Annulla</string>
     <string name="nascondi_completati_dettaglio">Nascondi Completati</string>
 
-    <string name="add_name_list">Nome lista: </string>
+    <string name="add_name_list">Nome della lista</string>
     <string name="add_desc_list">Descrizione</string>
-    <string name="dialog_title">Aggiungi lista</string>
     <string name="logout">Logout</string>
 
 </resources>

@@ -1,55 +1,44 @@
 package com.example.matteobellinaso.listspesaandroid.ui.adapter;
 
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.CursorAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.matteobellinaso.listspesaandroid.R;
-import com.example.matteobellinaso.listspesaandroid.data.Item;
-import com.example.matteobellinaso.listspesaandroid.data.ItemList;
 import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseListManager;
 import com.example.matteobellinaso.listspesaandroid.logic.Utils;
-
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.example.matteobellinaso.listspesaandroid.R.id.list_background;
+import com.example.matteobellinaso.listspesaandroid.ui.activity.DetailActivity;
 
 /**
  * Created by matteobellinaso on 09/04/18.
  */
 
-public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder>  {
+public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder> {
 
+    private AdapterView.OnItemClickListener longListener;
+    private LayoutInflater mInflater;
+    private Cursor cursor;
+    private DatabaseListManager databaseListManager;
+    private Context contesto;
+    private int[] idToDetail;
+    private AlertDialog.Builder builder;
 
-        private AdapterView.OnItemClickListener longListener;
-        private LayoutInflater mInflater;
-        private Cursor cursor;
-        private DatabaseListManager dbListManager;
-        private Context contesto;
-
-    public  class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mTextView;
         private ImageView img;
         private View root;
-        AlertDialog.Builder builder;
 
         public ViewHolder(final View view) {
             super(view);
@@ -59,24 +48,35 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
 
         }
 
-        public void setOnItemClickCustom(Context context, final int position){
+        public void setOnItemClickCustom(Context context, final int position) {
             context = root.getContext();
-            builder = new AlertDialog.Builder(context);
+            final Context finalContext = context;
+
+            root.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intentDetail = new Intent(contesto, DetailActivity.class);
+                    intentDetail.putExtra("listId", idToDetail[position]);
+                    contesto.startActivity(intentDetail);
+                }
+            });
+
 
             root.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
 
                     cursor.moveToPosition(position);
-                    dbListManager.open();
+                    databaseListManager.open();
 
+                    builder = new AlertDialog.Builder(finalContext);
                     builder.setTitle(R.string.alert_remove_list);
-                    builder.setMessage("vuoi eliminare la lista " + cursor.getString(cursor.getColumnIndex(dbListManager.KEY_LIST_NAME)) + " ?");
+                    builder.setMessage("vuoi eliminare la lista" + cursor.getString(cursor.getColumnIndex(databaseListManager.KEY_LIST_NAME)) + "?");
 
                     builder.setPositiveButton((R.string.alert_confim), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            dbListManager.deleteList(cursor.getInt(cursor.getColumnIndex(dbListManager.KEY_LIST_ID)));
+                            databaseListManager.deleteList(cursor.getInt(cursor.getColumnIndex(databaseListManager.KEY_LIST_ID)));
                             swapCursor();
                         }
                     });
@@ -94,21 +94,22 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         }
     }
 
-    public void swapCursor(){
-        if(cursor != null && !cursor.isClosed()){
+    public void swapCursor() {
+        if (cursor != null && !cursor.isClosed()) {
             cursor.close();
         }
-        cursor = dbListManager.fetchListByUser(Utils.readId(contesto));
-        notifyDataSetChanged();
 
+        cursor = databaseListManager.fetchListByUser(Utils.readId(contesto));
+        notifyDataSetChanged();
     }
 
-    public MyRecyclerAdapter(Context context){
-        dbListManager = new DatabaseListManager(context);
-        dbListManager.open();
+    public MyRecyclerAdapter(Context context) {
+        databaseListManager = new DatabaseListManager(context);
+        databaseListManager.open();
         mInflater = LayoutInflater.from(context);
-        cursor = dbListManager.fetchListByUser(Utils.readId(context));
+        cursor = databaseListManager.fetchListByUser(Utils.readId(context));
         contesto = context;
+        idToDetail = new int[cursor.getCount()];
     }
 
     @Override
@@ -125,22 +126,27 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
 
         cursor.moveToPosition(position);
 
-        String nameList = cursor.getString(cursor.getColumnIndex(dbListManager.KEY_LIST_NAME));
+        idToDetail[position] = cursor.getInt(cursor.getColumnIndex("_id"));
+        Log.d("iddetail","pos "+position);
+        String nameList = cursor.getString(cursor.getColumnIndex(databaseListManager.KEY_LIST_NAME));
         holder.mTextView.setText(nameList);
         holder.setOnItemClickCustom(contesto, position);
 
-        String  uri = cursor.getString(cursor.getColumnIndex(dbListManager.KEY_LIST_IMG));
-        try{
-            if(uri != null && uri.length() > 0) {
+        String imgString = cursor.getString(cursor.getColumnIndex(databaseListManager.KEY_LIST_IMG));
+
+        String uri = cursor.getString(cursor.getColumnIndex(DatabaseListManager.KEY_LIST_IMG));
+        try {
+            if (uri != null && uri.length() > 0) {
                 holder.img.setImageURI(getUriFromString(uri));
-            }else{
+            } else {
                 holder.img.setImageURI(null);
                 holder.mTextView.setTextColor(contesto.getColor(R.color.fontColor));
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             Log.w("LIST_EXAMPLE", "Exception while retrieving resource " + uri);
         }
     }
+
 
     @Override
     public int getItemCount() {
@@ -154,5 +160,3 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
 
 
 }
-
-
