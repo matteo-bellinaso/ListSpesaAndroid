@@ -19,6 +19,7 @@ import com.example.matteobellinaso.listspesaandroid.R;
 import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseListManager;
 import com.example.matteobellinaso.listspesaandroid.logic.Utils;
 import com.example.matteobellinaso.listspesaandroid.ui.activity.DetailActivity;
+import com.example.matteobellinaso.listspesaandroid.ui.activity.ListActivity;
 
 /**
  * Created by matteobellinaso on 09/04/18.
@@ -48,6 +49,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
 
         }
 
+
         public void setOnItemClickCustom(Context context, final int position) {
             context = root.getContext();
             final Context finalContext = context;
@@ -71,13 +73,15 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
 
                     builder = new AlertDialog.Builder(finalContext);
                     builder.setTitle(R.string.alert_remove_list);
-                    builder.setMessage("vuoi eliminare la lista" + cursor.getString(cursor.getColumnIndex(databaseListManager.KEY_LIST_NAME)) + "?");
+                    builder.setMessage("vuoi eliminare la lista " + cursor.getString(cursor.getColumnIndex(databaseListManager.KEY_LIST_NAME)) + "?");
 
                     builder.setPositiveButton((R.string.alert_confim), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             databaseListManager.deleteList(cursor.getInt(cursor.getColumnIndex(databaseListManager.KEY_LIST_ID)));
                             swapCursor();
+                            Utils.setNList(finalContext);
+                            ListActivity.setNlist();
                         }
                     });
                     builder.setNegativeButton((R.string.alert_undo), new DialogInterface.OnClickListener() {

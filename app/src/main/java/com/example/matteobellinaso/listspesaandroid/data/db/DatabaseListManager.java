@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.matteobellinaso.listspesaandroid.logic.Utils;
+
 /**
  * Created by matteobellinaso on 11/04/18.
  */
@@ -68,4 +70,14 @@ public class DatabaseListManager {
         return database.query(DATABASE_TABLE,null, KEY_LIST_USERID + " = " + userId, null, null, null,null);
     }
 
+    public Cursor fetchLastList(int userId) {
+        return database.query(DATABASE_TABLE,null, KEY_LIST_USERID + " = " + userId +" AND "+KEY_LIST_ID+" = (SELECT MAX("+KEY_LIST_ID+") FROM "+DATABASE_TABLE+")", null, null, null,null);
+    }
+
+    public int getNumberList(Context context){
+
+        Cursor cursoe = fetchListByUser(Utils.readId(context));
+        return cursoe.getCount();
+
+    }
 }

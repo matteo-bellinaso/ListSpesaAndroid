@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -53,9 +54,11 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
-                    listView.setAdapter(new MyCursorAdapter(getApplicationContext(), databaseItemManager.checkedValues(listId)));
+                    mAdapter.swapCursor(databaseItemManager.checkedValues(listId));
+                    mAdapter.notifyDataSetChanged();
                 } else {
-                    listView.setAdapter(mAdapter);
+                    mAdapter.swapCursor(databaseItemManager.fetchFromId(listId));
+                    mAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -64,22 +67,27 @@ public class DetailActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (!checkBox.isChecked()) {
-                    ImageView checked = (ImageView) view.findViewById(R.id.imgCheck);
+                ImageView checked = (ImageView) view.findViewById(R.id.imgCheck);
 
-                    Cursor currentCursor = mAdapter.getCursor();
 
-                    if (currentCursor.getInt(currentCursor.getColumnIndex("checked")) == 0) {
-                        databaseItemManager.updateItem(currentCursor.getInt(currentCursor.getColumnIndex("_id")), 1);
-                        checked.setVisibility(View.VISIBLE);
-                    } else {
-                        databaseItemManager.updateItem(currentCursor.getInt(currentCursor.getColumnIndex("_id")), 0);
-                        checked.setVisibility(View.INVISIBLE);
-                    }
+                Cursor currentCursor = mAdapter.getCursor();
 
-                    mAdapter.swapCursor(databaseItemManager.fetchFromId(listId));
-                    listView.setAdapter(mAdapter);
+                if (currentCursor.getInt(currentCursor.getColumnIndex("checked")) == 0) {
+                    databaseItemManager.updateItem(currentCursor.getInt(currentCursor.getColumnIndex("_id")), 1);
+                    checked.setVisibility(View.VISIBLE);
+                } else {
+                    databaseItemManager.updateItem(currentCursor.getInt(currentCursor.getColumnIndex("_id")), 0);
+                    checked.setVisibility(View.INVISIBLE);
                 }
+
+                if (checkBox.isChecked()) {
+                    mAdapter.swapCursor(databaseItemManager.checkedValues(listId));
+                    mAdapter.notifyDataSetChanged();
+                } else {
+                    mAdapter.swapCursor(databaseItemManager.fetchFromId(listId));
+                    mAdapter.notifyDataSetChanged();
+                }
+
             }
         });
 
@@ -130,6 +138,8 @@ public class DetailActivity extends AppCompatActivity {
         LayoutInflater inflater = this.getLayoutInflater();
 
         View dialogView = inflater.inflate(R.layout.dialog_custom, null);
+        ImageButton imgButt = dialogView.findViewById(R.id.add_list_img);
+        imgButt.setVisibility(View.GONE);
         dialogBuilder.setView(dialogView);
         final EditText edit = (EditText) dialogView.findViewById(R.id.edit_add_list);
         dialogBuilder.setTitle(R.string.add_name_list);

@@ -29,6 +29,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.matteobellinaso.listspesaandroid.R;
@@ -55,6 +56,8 @@ public class ListActivity extends AppCompatActivity {
     private ImageButton addImg;
 
     private static int RESULT_LOAD_IMG = 1;
+    public final static String EXTRA_LIST_ID = "listId";
+
 
     private String pathImgList;
 
@@ -63,6 +66,7 @@ public class ListActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private DatabaseListManager databaseListManager;
     private Context mContext;
+    private static TextView nlist;
 
     @Override
     public void onBackPressed() {
@@ -72,6 +76,7 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        setNlist();
         databaseListManager.open();
     }
 
@@ -87,7 +92,7 @@ public class ListActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.userIcon: {
                 Intent intent = new Intent(this, ProfileActivity.class);
-                intent.putExtra("userId",Utils.readId(this));
+                intent.putExtra("userId", Utils.readId(this));
                 startActivity(intent);
                 return true;
             }
@@ -103,6 +108,10 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        Utils.setNList(this);
+
+        nlist = (TextView) findViewById(R.id.n_list);
+
         databaseListManager = new DatabaseListManager(this);
         databaseListManager.open();
 
@@ -115,20 +124,20 @@ public class ListActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-
-        FloatingActionButton buttons =(FloatingActionButton) findViewById(R.id.floating_button);
+        FloatingActionButton buttons = (FloatingActionButton) findViewById(R.id.floating_button);
+        setNlist();
 
         buttons.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    addListDialog();
+                addListDialog();
             }
         });
         databaseListManager.close();
     }
 
 
-    public void addListDialog(){
+    public void addListDialog() {
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
 
@@ -152,8 +161,17 @@ public class ListActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 databaseListManager.createList(edit.getText().toString(), pathImgList, Utils.readId(ListActivity.this));
                 mAdapter = new MyRecyclerAdapter(ListActivity.this);
+
+                Utils.setNList(getApplicationContext());
                 mRecyclerView.setAdapter(mAdapter);
                 pathImgList = null;
+
+                Cursor idCursor = databaseListManager.fetchLastList(Utils.readId(ListActivity.this));
+                idCursor.moveToFirst();
+                Intent intent = new Intent(ListActivity.this, DetailActivity.class);
+                intent.putExtra(EXTRA_LIST_ID, idCursor.getInt(idCursor.getColumnIndex("_id")));
+                startActivity(intent);
+
             }
         });
 
@@ -169,9 +187,9 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        setNlist();
         databaseListManager.close();
     }
-
 
 
     @Override
@@ -193,8 +211,8 @@ public class ListActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
             }
 
-        }else {
-            Toast.makeText(getApplicationContext(), "You haven't picked Image",Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "You haven't picked Image", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -205,6 +223,9 @@ public class ListActivity extends AppCompatActivity {
         return stringUri;
     }
 
+    public static void setNlist(){
+        nlist.setText("Elenco liste (" + Utils.getNLIST() + ")" );
+    }
 
 }
 
