@@ -93,7 +93,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
                         }
                     });
                     builder.show();
-                    databaseListManager.close();
                     return true;
                 }
             });
