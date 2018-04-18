@@ -1,19 +1,14 @@
 package com.example.matteobellinaso.listspesaandroid.ui.activity;
 
 import android.content.Intent;
-import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,31 +16,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.matteobellinaso.listspesaandroid.R;
-import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseHelper;
-import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseItemManager;
 import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseListManager;
-import com.example.matteobellinaso.listspesaandroid.logic.Utils;
-import com.example.matteobellinaso.listspesaandroid.data.Item;
-import com.example.matteobellinaso.listspesaandroid.data.ItemList;
 import com.example.matteobellinaso.listspesaandroid.logic.Utils;
 import com.example.matteobellinaso.listspesaandroid.ui.adapter.MyRecyclerAdapter;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by matteobellinaso on 09/04/18.

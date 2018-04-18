@@ -22,7 +22,8 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/tutorial_text_description"
             android:padding="10dp"
-            android:text="@string/add_name_list"/>
+            android:text="@string/add_name_list"
+            android:id="@+id/dialog_text"/>
     <EditText
         android:id="@+id/edit_add_list"
         android:layout_width="match_parent"

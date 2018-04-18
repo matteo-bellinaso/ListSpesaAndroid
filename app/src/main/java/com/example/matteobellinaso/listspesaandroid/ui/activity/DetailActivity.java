@@ -1,6 +1,5 @@
 package com.example.matteobellinaso.listspesaandroid.ui.activity;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,10 +17,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.matteobellinaso.listspesaandroid.R;
-import com.example.matteobellinaso.listspesaandroid.data.Item;
 import com.example.matteobellinaso.listspesaandroid.data.db.DatabaseItemManager;
 import com.example.matteobellinaso.listspesaandroid.ui.adapter.MyCursorAdapter;
 
@@ -157,6 +155,8 @@ public class DetailActivity extends AppCompatActivity {
         ImageButton imgButt = dialogView.findViewById(R.id.add_list_img);
         imgButt.setVisibility(View.GONE);
         dialogBuilder.setView(dialogView);
+        TextView text = (TextView) dialogView.findViewById(R.id.dialog_text);
+        text.setText("nome prodotto: ");
         final EditText edit = (EditText) dialogView.findViewById(R.id.edit_add_list);
         dialogBuilder.setTitle(R.string.add_name_product);
 
