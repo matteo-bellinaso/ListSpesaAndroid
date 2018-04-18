@@ -64,7 +64,6 @@ public class ProfileActivity extends AppCompatActivity {
         databaseUserManager = new DatabaseUserManager(this);
         databaseUserManager.open();
 
-
         cursor = databaseUserManager.selectUserById(userId);
         if (cursor != null && cursor.getCount()>0) {
             cursor.moveToFirst();
@@ -80,6 +79,7 @@ public class ProfileActivity extends AppCompatActivity {
             welcomUserProfile.setText("Benvenuto " + user);
             userProfile.setText(user);
             emailProfile.setText(emailprofile);
+
             cursor.close();
             databaseUserManager.close();
 

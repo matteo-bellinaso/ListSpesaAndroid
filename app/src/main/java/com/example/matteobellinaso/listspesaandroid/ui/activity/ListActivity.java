@@ -170,6 +170,7 @@ public class ListActivity extends AppCompatActivity {
                 idCursor.moveToFirst();
                 Intent intent = new Intent(ListActivity.this, DetailActivity.class);
                 intent.putExtra(EXTRA_LIST_ID, idCursor.getInt(idCursor.getColumnIndex("_id")));
+                intent.putExtra("listName", idCursor.getString(idCursor.getColumnIndex(databaseListManager.KEY_LIST_NAME)));
                 startActivity(intent);
 
             }

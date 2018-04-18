@@ -64,7 +64,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
                     Intent intentDetail = new Intent(contesto, DetailActivity.class);
                     intentDetail.putExtra("listId", idToDetail[position]);
                     intentDetail.putExtra("listName", cursor.getString(cursor.getColumnIndex(databaseListManager.KEY_LIST_NAME)));
-                    contesto.startActivity(intentDetail);
+                    finalContext.startActivity(intentDetail);
                     databaseListManager.close();
                 }
             });
